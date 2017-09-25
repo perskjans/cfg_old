@@ -1,0 +1,2 @@
+#!/bin/sh
+~/netbeans-8.1/bin/netbeans --jdkhome ~/jdk1.8.0_65 &

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Favorites>
+	<Hubs>
+		<Hub Name="ComicShack" Connect="1" Description="http://comicshack.zcultfm.org:411" Nick="[BBB]Laxman" Password="byakugan" Server="http://comicshack.zcultfm.org:1209" UserDescription="" Encoding=""/>
+		<Hub Name="-= Comix Underground =-" Connect="0" Description="" Nick="" Password="" Server="comixunderground.no-ip.com" UserDescription="" Encoding=""/>
+	</Hubs>
+	<Users>
+		<User LastSeen="1505092085" GrantSlot="0" UserDescription="" Nick="oogabooga" URL="http://comicshack.zcultfm.org:1209" CID="BXJVAS23XULGPROSXFM2LYHXRQUTAFJBGFZYT7Q"/>
+		<User LastSeen="1505092085" GrantSlot="1" UserDescription="" Nick="Axel" URL="http://comicshack.zcultfm.org:1209" CID="O3CL52CD5ZVNLJFUUUYQMPG2VJKBVONHEGQJUHY"/>
+		<User LastSeen="1424029939" GrantSlot="0" UserDescription="" Nick="[RUS]Alexander" URL="http://comicshack.zcultfm.org:1209" CID="3TGZYUVMWFGTZ3EMDSGJJV2BNHMDAIQUOT2R5NQ"/>
+		<User LastSeen="1444425520" GrantSlot="0" UserDescription="" Nick="Rob" URL="http://comicshack.zcultfm.org:1209" CID="CF7TCDSPUX6DIPXKPRBDSHB3ZTWAS2UFG7EIDDA"/>
+		<User LastSeen="1424029939" GrantSlot="0" UserDescription="" Nick="Star" URL="http://comicshack.zcultfm.org:1209" CID="75LXB2DPI56IEAMFBNL3S66O5WVHJSZBWJ7ICVI"/>
+		<User LastSeen="1505175798" GrantSlot="0" UserDescription="" Nick="[Im]agi" URL="http://comicshack.zcultfm.org:1209" CID="TQRY3CEYOTGSZ6Y2R63APGDXIDVU3ERN332U7LA"/>
+		<User LastSeen="1455983032" GrantSlot="0" UserDescription="" Nick="laluna007" URL="http://comicshack.zcultfm.org:1209" CID="6G3MAB24QWFHDMSDVIBSQ7MQ3MHUUWKTJJLQ2HA"/>
+		<User LastSeen="1505399535" GrantSlot="1" UserDescription="" Nick="blodskorv2" URL="http://comicshack.zcultfm.org:1209" CID="7ALJLOH36ZHPPLSFLBBFYFDY3YEJVYKWMBMYWPA"/>
+		<User LastSeen="1505092085" GrantSlot="1" UserDescription="" Nick="blodskorv" URL="http://comicshack.zcultfm.org:1209" CID="A7BLW5AVDNDPBX72VXV4CIC2XYAKJMSOSGU4HRQ"/>
+		<User LastSeen="1424029939" GrantSlot="0" UserDescription="" Nick="[BBB]o_O" URL="http://comicshack.zcultfm.org:1209" CID="WATE4TSEFL4MOUGOMJ7O3RI4E5WIJUZQ5FGYYPI"/>
+		<User LastSeen="1424029939" GrantSlot="0" UserDescription="" Nick="Unassigned" URL="http://comicshack.zcultfm.org:1209" CID="DBAWQ4O53REDWVWCP6CYCV3C6VD2KWTCU546ZLI"/>
+		<User LastSeen="1503163975" GrantSlot="0" UserDescription="" Nick="[BBB]boom" URL="http://comicshack.zcultfm.org:1209" CID="SBLNFIKAQHNAEFMA6EAMAHRQYZAWS376OCFOMTI"/>
+		<User LastSeen="1424029939" GrantSlot="0" UserDescription="" Nick="dolfyn" URL="http://comicshack.zcultfm.org:1209" CID="CTGI3NFAP5LE6DYDLCSJAIFLVTNRWNUMGFZX3JA"/>
+		<User LastSeen="1505280583" GrantSlot="1" UserDescription="" Nick="fanskap" URL="http://comicshack.zcultfm.org:1209" CID="W4RDFU5QJR4UTLVV2IRPVJ2MGVGH3PHT4ITQWGI"/>
+	</Users>
+	<UserCommands/>
+	<FavoriteDirs/>
+</Favorites>

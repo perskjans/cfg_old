@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PIDVAR=$(pidof mongoose)
+
+if [ $PIDVAR ] ; then
+   echo "mongoose already running with pid: " $PIDVAR
+else
+   sudo nohup ~/dotfiles/Mongoose/mongoose ~/dotfiles/Mongoose/mongoose.conf &
+fi
