@@ -5,20 +5,22 @@
     autocrlf = false
     fileMode = false
 # git config --global core.excludesfile ~/.gitignore_global
-    excludesfile = /home/perskjans/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [push]
     default = matching
 [alias]
-    st = status
-    co = checkout
     br = branch
+    chp = cherry-pick
     ci = commit
-    pu = pull
-    ps = push
-    me = merge
+    co = checkout
+    di = diff --color=auto
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --reverse --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg4 = log --reverse --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    me = merge
+    ps = push
+    pu = pull
+    st = status
 [pull]
     rebase = true
