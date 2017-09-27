@@ -428,7 +428,7 @@ nnoremap <silent> <C-=> :vertical resize 100%<cr>
     nnoremap <leader>r :%s:::cg<Left><Left><Left><Left>
 
     " Toggle search highlight
-    nnoremap <leader>s :set hlsearch! hlsearch?<CR>
+    nnoremap <leader>h :set hlsearch! hlsearch?<CR>
 
     " Open vimrc
     nnoremap <F3> :find $MYVIMRC<cr>
@@ -464,8 +464,8 @@ nnoremap <silent> <C-=> :vertical resize 100%<cr>
 
     " Run make
     nnoremap <F6>  :make!<cr><cr><cr>:cw<cr><cr>
-    nnoremap <F7>  :cn<cr>
-    nnoremap <F8>  :cp<cr>
+    nnoremap <F7>  :cp<cr>
+    nnoremap <F8>  :cn<cr>
     nnoremap <F9>  :call g:QFixToggle()<cr>
 
     function! g:QFixToggle()
