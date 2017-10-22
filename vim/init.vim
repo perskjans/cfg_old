@@ -1,4 +1,42 @@
-let MYVIMRC='~/.vimrc'
+
+let $myvimdir="~/.config/nvim"
+let MYVIMRC=$myvimdir . "/init.vim"
+
+syntax on
+so $myvimdir/colors/arcnice.vim
+
+" Backups folders {{{
+
+set backup
+set noswapfile
+
+"let $tmp=$myvimdir . "/tmp"
+"set dir=$tmp
+"let $tmp=$myvimdir . "/tmp/undo"
+"set undodir=$tmp
+"let $tmp=$myvimdir . "/tmp/backup"
+"set backupdir=$tmp
+"let $tmp=$myvimdir . "/tmp/view"
+"set viewdir=$tmp
+
+" Make Vim able to edit crontab files again.
+set backupskip=/tmp/*,/private/tmp/*"
+
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&dir))
+    call mkdir(expand(&dir), "p")
+endif
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+    call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&viewdir))
+    call mkdir(expand(&viewdir), "p")
+endif
+
+" }}}
 
 " PLUGIN HANDLING -------------------------------------------------------- {{{
 "## neomake, vim-plug, matchit, vim-suround, supertab, ZoomWin, tComment, 
@@ -10,11 +48,11 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 
-set rtp+=~/.vim/plugins/Vundle.vim
+set rtp+=$myvimdir/plugins/Vundle.vim
 
 " call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-call vundle#begin('~/.vim/plugins')
+call vundle#begin($myvimdir . '/plugins')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -24,7 +62,7 @@ Plugin 'VundleVim/Vundle.vim'
 "let g:PyFlakeCheckers = 'pep8'
 "let g:PyFlakeAggressive = 0
 
-Plugin 'flazz/vim-colorschemes'
+"Plugin 'flazz/vim-colorschemes'
 
 "Plugin 'justmao945/vim-clang'
 
@@ -81,6 +119,7 @@ map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
 "All of your Plugins must be added before the following line
 call vundle#end()            " required
+
 "filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 filetype plugin on
@@ -114,6 +153,7 @@ filetype plugin on
 
 set path+=**
 set modelines=0
+
 set autoindent
 set showmode
 set showcmd
@@ -276,45 +316,9 @@ set wildignore+=nbproject                        " Netbeans project folder
 set wildignore+=external                         " folders for external dependecies
 " }}}
 
-" Backups folders {{{
-
-set backup
-set noswapfile
-
-set dir=~/.vim/tmp
-set undodir=~/.vim/tmp/undo
-set backupdir=~/.vim/tmp/backup
-set viewdir=~/.vim/tmp/view
-
-" Make Vim able to edit crontab files again.
-set backupskip=/tmp/*,/private/tmp/*"
-
-" Make those folders automatically if they don't already exist.
-if !isdirectory(expand(&dir))
-    call mkdir(expand(&dir), "p")
-endif
-if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
-endif
-if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
-endif
-if !isdirectory(expand(&viewdir))
-    call mkdir(expand(&viewdir), "p")
-endif
-
-" }}}
-
 " END ---------------------------------------------------------------------- }}}
 
 " GRAPHICAL SETTINGS ------------------------------------------------------- {{{
-
-syntax on
-colorscheme arcnice
-
-function! SetColorScheme()
-    colorscheme arcnice
-endfunction
 
 " Tabs, spaces, wrapping {{{
 
@@ -329,13 +333,10 @@ set wrap
 "set textwidth=80
 set formatoptions=tcq
 set colorcolumn=81
-
-" }}}
-"=====[ Show when lines extend past column 80 "]=======
-
-
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
+
+" }}}
 
 " Cursorline {{{
 " Only show cursorline in the current window and in normal mode.^
@@ -385,7 +386,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
 
 " END ---------------------------------------------------------------------- }}}
 
-    " KEY MAPPING -------------------------------------------------------------- {{{
+    " KEY MAPPING -------------------------------------------------------------- {{{{{{
     " Leader
     "let mapleader = "-"
     "let maplocalleader = "_"
@@ -423,7 +424,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
     "nnoremap ' "
 nnoremap <silent> <leader>0 :wincmd =<cr>
 
-" END ---------------------------------------------------------------------- }}}
+" END ---------------------------------------------------------------------- }}}}}}
 
     " KEY MAPPING -------------------------------------------------------------- {{{
     " Leader
@@ -483,6 +484,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
 
     " Open vimrc
     nnoremap <F3> :find $MYVIMRC<cr>
+    nnoremap <leader>0 :so $MYVIMRC<CR>
 
     " Close current buffer
     nnoremap <leader>b :bd<CR>
@@ -493,8 +495,6 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
     " Reload current buffer
     nnoremap <F5> :e<cr>
 
-    " Set my colorscheme
-    nnoremap <leader>z mz:call SetColorScheme()<CR>
 
     " Make zO recursively open whatever fold we're in, even if it's partially open.
     nnoremap zO zczO
@@ -644,7 +644,7 @@ set foldnestmax=2
 
 "Toggle fold methods \fo
 let g:FoldMethod = 0
-map <leader>fo :call ToggleFold()<cr>
+map <leader>z :call ToggleFold()<cr>
 fun! ToggleFold()
     if g:FoldMethod == 0
         exe 'set foldmethod=indent'
