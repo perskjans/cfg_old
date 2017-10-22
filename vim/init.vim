@@ -56,6 +56,17 @@ let g:airline#extensions#tabline#enabled = 1
 
 Plugin 'richsoni/vim-ecliptic'
 
+Plugin 'klen/python-mode'
+map <Leader>g :call RopeGotoDefinition()<CR>
+let ropevim_enable_shortcuts = 1
+let g:pymode_rope_goto_def_newwin = "vnew"
+let g:pymode_rope_extended_complete = 1
+let g:pymode_breakpoint = 1
+let g:pymode_sytax = 1
+let g:pymode_sytax_builtin_objs = 1
+let g:pymode_sytax_builtin_funcs = 1
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+
 "Plugin 'vim-airline/vim-airline-themes'
 
 "Plugin 'jeaye/color_coded'
@@ -674,7 +685,7 @@ augroup ft_django
     au BufNewFile,BufRead common_settings.py  setlocal foldmethod=marker
 augroup END
 
-" }}}
+" }}z
 " Fish {{{
 
 augroup ft_fish

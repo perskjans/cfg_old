@@ -3,12 +3,12 @@
 # Add these lines to /etc/fstab
 
 # Disk1
-/dev/sda1	/media/disk1  ext4  defaults             0  0
-# Disk2
-/dev/sdc1	/media/disk2  ext4  defaults             0  0
-# Disk3
-/dev/sdd1	/media/disk3  ext4  defaults             0  0
-# Disk4
-/dev/sde1	/media/disk4  ext4  defaults             0  0
+/dev/sdb1	/media/sdb1  ext4  defaults             0  0
+# Disk2 
+/dev/sdc1	/media/sdc1  ext4  defaults             0  0
+# Disk3 
+/dev/sdd1	/media/sdd1  ext4  defaults             0  0
+# Disk4 
+/dev/sde1	/media/sde1  ext4  defaults             0  0
 
 # 192.168.1.25:/media/perskjans /mnt  nfs  rw,soft,intr,noatime,timeo=100,rsize=262144,wsize=65536 0 0

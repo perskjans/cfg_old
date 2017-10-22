@@ -3,14 +3,14 @@
 	<Settings>
 		<Nick type="string">Arcnice</Nick>
 		<UploadSpeed type="string">10</UploadSpeed>
-		<DownloadDirectory type="string">/media/disk3/1.Downloaded_from_DC++/</DownloadDirectory>
+		<DownloadDirectory type="string">/media/sdc1/1.Downloaded_from_DC++/</DownloadDirectory>
 		<HublistServers type="string">http://dchublist.com/hublist.xml.bz2;http://www.hublista.hu/hublist.xml.bz2</HublistServers>
 		<LogDirectory type="string">/home/perskjans/.dc++/Logs/</LogDirectory>
 		<LogFormatPostDownload type="string">%Y-%m-%d %H:%M: %[target] downloaded from %[userNI] (%[userCID]), %[fileSI] (%[fileSIchunk]), %[speed], %[time], %[fileTR]</LogFormatPostDownload>
 		<LogFormatPostUpload type="string">%Y-%m-%d %H:%M: %[source] uploaded to %[userNI] (%[userCID]), %[fileSI] (%[fileSIchunk]), %[speed], %[time], %[fileTR]</LogFormatPostUpload>
 		<LogFormatMainChat type="string">[%Y-%m-%d %H:%M] %[message]</LogFormatMainChat>
 		<LogFormatPrivateChat type="string">[%Y-%m-%d %H:%M] %[message]</LogFormatPrivateChat>
-		<TempDownloadDirectory type="string">/media/disk3/1.Downloaded_from_DC++/Unfinished_downloads/</TempDownloadDirectory>
+		<TempDownloadDirectory type="string">/media/sdc1/1.Downloaded_from_DC++/Unfinished_downloads/</TempDownloadDirectory>
 		<BindAddress type="string">0.0.0.0</BindAddress>
 		<ConfigVersion type="string">0.75</ConfigVersion>
 		<DefaultAwayMessage type="string">I'm away. State your business and I might answer later if you're lucky.</DefaultAwayMessage>
@@ -111,6 +111,6 @@
 		<ConfirmHubRemoval type="int">1</ConfirmHubRemoval>
 	</Settings>
 	<Share>
-		<Directory Virtual="Comics">/media/disk3/Comics/</Directory>
+		<Directory Virtual="Comics">/media/sdc1/Comics/</Directory>
 	</Share>
 </DCPlusPlus>

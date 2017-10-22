@@ -39,7 +39,7 @@ cat /proc/sys/vm/swappiness
 sudo bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf"
 
 # VIM
-#sudo add-apt-repository ppa:neovim-ppa/stable
+sudo add-apt-repository ppa:neovim-ppa/stable
 sudo apt-get install -y neovim xclip
 #sudo apt-get install -y python-neovim
 #sudo apt-get install -y python3-neovim
