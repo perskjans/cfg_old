@@ -310,8 +310,6 @@ endif
 " GRAPHICAL SETTINGS ------------------------------------------------------- {{{
 
 syntax on
-"arcnice 0x7A69_dark
-
 colorscheme arcnice
 
 function! SetColorScheme()
@@ -328,33 +326,33 @@ set smarttab       "Use shiftwidths at left margin, tabstops everywhere else
 set softtabstop=4
 set expandtab
 set wrap
-set textwidth=80
+"set textwidth=80
 set formatoptions=tcq
-set colorcolumn=0
+set colorcolumn=81
 
 " }}}
 "=====[ Show when lines extend past column 80 "]=======
 
-highlight ColorColumn ctermbg=magenta
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
 
 " Cursorline {{{
-" Only show cursorline in the current window and in normal mode. 
-"augroup cline
-"    au!
-"    au WinLeave,InsertEnter * set nocursorline
-"    au WinEnter,InsertLeave * set cursorline
-"augroup END
+" Only show cursorline in the current window and in normal mode.^
+augroup cline
+    au!
+    au WinLeave,InsertEnter * set nocursorline
+    au WinEnter,InsertLeave * set cursorline
+augroup END
 
 " }}}
 
 "====[ Toggle visibility of naughty characters ]============
 
 " Make naughty characters visible...
-" (uBB is right double angle, uB7 is middle dot)
-exec "set lcs=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+set listchars=tab:>~,trail:^,extends:>,precedes:<,nbsp:~
+",eol:
+set showbreak=.^.
 
 " Trailing {{{
 " Only shown when not in insert mode so I don't go insane.
@@ -379,9 +377,51 @@ augroup VisibleNaughtiness
 augroup END
 
 " Resize vertical window
-nnoremap <silent> <C-+> :vertical resize +2<cr>
-nnoremap <silent> <C--> :vertical resize -2<cr>
-nnoremap <silent> <C-=> :vertical resize 100%<cr>
+nnoremap <silent> <leader>1 :vertical resize +2<cr>
+nnoremap <silent> <leader>2 :vertical resize -2<cr>
+nnoremap <silent> <leader>3 :resize +2<cr>
+nnoremap <silent> <leader>4 :resize -2<cr>
+nnoremap <silent> <leader>0 :wincmd =<cr>
+
+" END ---------------------------------------------------------------------- }}}
+
+    " KEY MAPPING -------------------------------------------------------------- {{{
+    " Leader
+    "let mapleader = "-"
+    "let maplocalleader = "_"
+
+    " === Movement ===
+    nnoremap <C-j> jzz
+    nnoremap <C-k> kzz
+    nnoremap <A-n> }zz
+    nnoremap <A-e> {zz
+    nnoremap <C-e> <C-p>
+    nnoremap <C-p> <C-e>
+    vnoremap <C-e> <C-p>
+    vnoremap <C-p> <C-e>
+
+    " Splits
+    nnoremap <leader>v <C-w>v
+    nnoremap <leader>vv <C-w>s
+
+    " Move between splits
+    nnoremap <UP>  <C-W>k
+    nnoremap <DOWN>  <C-W>j
+    nnoremap <LEFT>  <C-W>h
+    nnoremap <RIGHT>  <C-W>l
+
+    " Move between open buffers
+    nnoremap <C-l> :bn<CR> 
+    nnoremap <C-h> :bp<CR> 
+
+
+    " === Misc ===
+
+    "noremap ; :
+    "nnoremap : ,
+    "nnoremap , ;
+    "nnoremap ' "
+nnoremap <silent> <leader>0 :wincmd =<cr>
 
 " END ---------------------------------------------------------------------- }}}
 
@@ -600,6 +640,20 @@ nnoremap <silent> <C-=> :vertical resize 100%<cr>
 
 set foldmethod=marker
 set foldlevelstart=0
+set foldnestmax=2
+
+"Toggle fold methods \fo
+let g:FoldMethod = 0
+map <leader>fo :call ToggleFold()<cr>
+fun! ToggleFold()
+    if g:FoldMethod == 0
+        exe 'set foldmethod=indent'
+        let g:FoldMethod = 1
+    else
+        exe 'set foldmethod=marker'
+        let g:FoldMethod = 0
+    endif
+endfun
 
 " Save folds when you leave buffer
 autocmd BufWinLeave *.* mkview

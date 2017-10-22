@@ -25,7 +25,7 @@
 
 hi clear
 set t_Co=256
-"set background=dark
+set background=dark
 if exists("syntax_on")
   syntax reset
 endif
@@ -35,7 +35,8 @@ let g:colors_name = "arcnice"
 "
 " Support for 256-color terminal
 "
-hi Normal          ctermfg=252  ctermbg=16
+"hi Normal          ctermfg=252  ctermbg=16
+hi Normal          ctermfg=130  ctermbg=16
 hi CursorLine      ctermfg=NONE ctermbg=235 cterm=NONE
 hi CursorLineNr    ctermfg=124 ctermbg=NONE
 
@@ -119,7 +120,7 @@ hi WildMenu        ctermfg=81  ctermbg=16
 
 hi Comment         ctermfg=59
 hi CursorColumn                ctermbg=234
-hi ColorColumn                 ctermbg=236
+hi ColorColumn                 ctermbg=235
 hi LineNr          ctermfg=250 ctermbg=NONE
 hi NonText         ctermfg=59
 
