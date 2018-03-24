@@ -1,23 +1,31 @@
+set fileencodings=utf-8
+set encoding=utf-8
 
 let $myvimdir="~/.config/nvim"
 let MYVIMRC=$myvimdir . "/init.vim"
 
 syntax on
-so $myvimdir/colors/arcnice.vim
+let $mycolorfile=$myvimdir . "/colors/arcnice.vim"
+so $mycolorfile
+
+"=====[ auto reload config if changed ]========
+augroup myvimrc
+    au!
+        au BufWritePost .vimrc so $MYVIMRC
+        au BufWritePost init.vim so $MYVIMRC
+augroup END
+
+nnoremap <silent> <leader>0 :so $MYVIMRC<cr>
 
 " Backups folders {{{
 
 set backup
 set noswapfile
 
-"let $tmp=$myvimdir . "/tmp"
-"set dir=$tmp
-"let $tmp=$myvimdir . "/tmp/undo"
-"set undodir=$tmp
-"let $tmp=$myvimdir . "/tmp/backup"
-"set backupdir=$tmp
-"let $tmp=$myvimdir . "/tmp/view"
-"set viewdir=$tmp
+set dir=/tmp
+set undodir=/tmp/undo
+set backupdir=/tmp/backup
+set viewdir=/tmp/view
 
 " Make Vim able to edit crontab files again.
 set backupskip=/tmp/*,/private/tmp/*"
@@ -62,7 +70,7 @@ Plugin 'VundleVim/Vundle.vim'
 "let g:PyFlakeCheckers = 'pep8'
 "let g:PyFlakeAggressive = 0
 
-"Plugin 'flazz/vim-colorschemes'
+Plugin 'flazz/vim-colorschemes'
 
 "Plugin 'justmao945/vim-clang'
 
@@ -138,13 +146,6 @@ filetype plugin on
 " END ---------------------------------------------------------------------- }}}
 
 " BASIC OPTIONS------------------------------------------------------------- {{{
-
-"=====[ auto reload config if changed ]========
-augroup myvimrc
-    au!
-        au BufWritePost .vimrc so $MYVIMRC
-        au BufWritePost init.vim so $MYVIMRC
-augroup END
 
 " required
 "filetype plugin indent on
@@ -351,6 +352,7 @@ augroup END
 "====[ Toggle visibility of naughty characters ]============
 
 " Make naughty characters visible...
+"exec "set listchars=tab:\<Char-0xBB>\<Char-0xBB>,trail:^,extends:>,precedes:<,nbsp:~"
 set listchars=tab:>~,trail:^,extends:>,precedes:<,nbsp:~
 ",eol:
 set showbreak=.^.
@@ -382,7 +384,7 @@ nnoremap <silent> <leader>1 :vertical resize +2<cr>
 nnoremap <silent> <leader>2 :vertical resize -2<cr>
 nnoremap <silent> <leader>3 :resize +2<cr>
 nnoremap <silent> <leader>4 :resize -2<cr>
-nnoremap <silent> <leader>0 :wincmd =<cr>
+nnoremap <silent> <leader>5 :wincmd =<cr>
 
 " END ---------------------------------------------------------------------- }}}
 
@@ -798,6 +800,7 @@ augroup ft_markdown
     au BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
 
     " Use <localleader>1/2/3 to add headings.
+
     au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=:redraw<cr>
     au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-:redraw<cr>
     au Filetype markdown nnoremap <buffer> <localleader>3 mzI###<space><esc>`zllll

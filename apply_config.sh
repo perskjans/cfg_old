@@ -7,6 +7,7 @@ if [ ! -d ~/linux_config ]; then
     sudo ln -snf $DIR ~/linux_config
 fi
 sudo ln -snf $DIR/bin ~/bin
+sudo ln -snf /media ~/media
 
 # Bash
 sudo ln -snf $DIR/.bashrc ~/.bashrc
@@ -29,7 +30,9 @@ if [ $(grep "fstab_add.txt" /etc/fstab | wc -l) -eq 0 ]; then
     cat /etc/fstab
     echo
 
+    sudo mkdir -p disk1 disk2 disk3 disk4
     sudo mount -a
+    sudo chmod 777 /media/*
 fi
 
 #Command to check current swappiness value: 
@@ -38,8 +41,11 @@ cat /proc/sys/vm/swappiness
 #Command to change swappiness value to 10:
 sudo bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf"
 
+# Add repos
+sudo add-apt-repository ppa:neovim-ppa/stable -y
+sudo apt-get update
+
 # VIM
-sudo add-apt-repository ppa:neovim-ppa/stable
 sudo apt-get install -y neovim xclip
 #sudo apt-get install -y python-neovim
 #sudo apt-get install -y python3-neovim
@@ -81,7 +87,9 @@ sudo apt-get install -y mcomix
 sudo apt-get install -y spotify-client
 
 # Google Chrome
-sudo apt-get install -y google-chrome-stable
+sudo apt-get install -y chromium-browser
+
+sudo apt-get full-upgrade -y
 
 # SSH
 if [ ! -f /etc/ssh/sshd_config ] || [ $(grep 'Port' /etc/ssh/sshd_config | cut -d' ' -f2) -ne 16080 ]; then
