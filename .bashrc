@@ -75,7 +75,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Alias definitions.
-alias vim='nvim'
+alias ne='nvim'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -85,7 +85,5 @@ alias l='ls -CF'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias g='git'
-alias p='find . -name ".git" -type d | sed "s/\.\//pushd .\//" | sed "s/\.git/; git pull; popd/" | sh'
-alias svim='sudo nvim -u /home/perskjans/nvim/init.vim'
-alias cc='sh ~/projects/tools/ciconverttools/domain_clean_cert.sh -d '
-alias gpa='sh ~/my_scripts/git_pull_all.sh'
+alias svim='sudo nvim -u ~/nvim/init.vim'
+alias gpa='sh ~/bin/git_pull_all.sh'
