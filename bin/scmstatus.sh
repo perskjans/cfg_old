@@ -1,7 +1,7 @@
 #!/bin/bash
 
-gs_prefix=~/
-. $gs_prefix/bin/ansicolor.sh
+gs_prefix=~/bin
+. $gs_prefix/ansicolor.sh
 
 # Display the exit status of the previous command, if non-zero.
 function ExitStatus
@@ -9,7 +9,7 @@ function ExitStatus
     gs_exitstatus=$?
 
     if [ $gs_exitstatus -ne 0 ]; then
-        echo -en "${RED}Exit status: $gs_exitstatus $RESET"
+        echo -en "${FG_RED}Exit status: $gs_exitstatus ${CO_RESET}"
     fi
 }
 
@@ -34,42 +34,42 @@ function CommitStatus
         if [ -z "$added" ]; then
             added=1
             MaybeEchoComma
-            echo -en "${YELLOW}Added${RESET}"
+            echo -en "${FG_YELLOW}Added${CO_RESET}"
         fi
     elif [[ $line == \?\?* ]]; then
         if [ -z "$untracked" ]; then
             untracked=1
             MaybeEchoComma
-            echo -en "${CYAN}Untracked${RESET}"
+            echo -en "${FG_CYAN}Untracked${CO_RESET}"
         fi
     elif [[ $line == M* ]]; then
         if [ -z "$modified" ]; then
             modified=1
             MaybeEchoComma
-            echo -en "${BLUE}Modified${RESET}"
+            echo -en "${FG_BLUE}Modified${CO_RESET}"
         fi
     elif [[ $line == D* ]]; then
         if [ -z "$deleted" ]; then
             deleted=1
             MaybeEchoComma
-            echo -en "${RED}Deleted${RESET}"
+            echo -en "${FG_RED}Deleted${CO_RESET}"
         fi
     elif [[ $line == R* ]]; then
         if [ -z "$renamed" ]; then
             renamed=1
             MaybeEchoComma
-            echo -en "${MAGENTA}Renamed${RESET}"
+            echo -en "${FG_MAGENTA}Renamed${CO_RESET}"
         fi
     elif [[ $line == C* ]]; then
         if [ -z "$copied" ]; then
             copied=1
-            echo -en ", ${MAGENTA}Copied${RESET}"
+            echo -en ", ${FG_MAGENTA}Copied${CO_RESET}"
         fi
     elif [[ $line == U* ]]; then
         if [ -z "$unmerged" ]; then
             copied=1
             MaybeEchoComma
-            echo -en "${MAGENTA}Updated-but-unmerged${RESET}"
+            echo -en "${FG_MAGENTA}Updated-but-unmerged${CO_RESET}"
         fi
     else
         echo "UNKNOWN STATUS"
@@ -93,20 +93,19 @@ function GitStatus
     if git rev-parse --git-dir >/dev/null 2>&1; then
         gs_branch=$(git branch | grep "^* " | cut -c 3-)
 
-        #echo -e "$BLUE[$RESET$gs_branch$BLUE]$RESET:"
+        #echo -e "${FG_BLUE}[${CO_RESET}$gs_branch${FG_BLUE}]${CO_RESET}:"
 
         gs_gitstatus=$(CommitStatus)
 
         if [ $? -eq 0 ]; then
-            git_string=Git$BLUE[$RESET$gs_branch$BLUE]$RESET:
             if [ -z "$gs_gitstatus" ]; then
-                echo -e "$git_string ${GREEN}Up-to-date${RESET}"
+                echo -e "${FG_BLUE}[${CO_RESET}$gs_branch${FG_BLUE}]${CO_RESET}: ${FG_GREEN}Up-to-date${CO_RESET}"
             else
-                echo -e "$git_string $gs_gitstatus"
+                echo -e "${FG_BLUE}[${CO_RESET}$gs_branch${FG_BLUE}]${CO_RESET}: $gs_gitstatus"
             fi
         fi
     fi
 }
 
-export PS1="\$(ExitStatus)$BLUE[$RESET\$(date +%H:%M)$BLUE]$RESET $GREEN\u$RESET @ $GREEN\h$RESET: $YELLOW\w$RESET \$(GitStatus)\n\$ "
+export PS1="\n\$(ExitStatus)${FG_BLUE}[${CO_RESET}\$(date +%H:%M)${FG_BLUE}]${CO_RESET} ${FG_GREEN}\u${CO_RESET} @ ${FG_GREEN}\h${CO_RESET}: ${FG_YELLOW}\w${CO_RESET} \$(GitStatus)\n\$ "
 

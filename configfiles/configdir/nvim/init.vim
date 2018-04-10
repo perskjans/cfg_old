@@ -5,7 +5,7 @@ let $myvimdir="~/.config/nvim"
 let MYVIMRC=$myvimdir . "/init.vim"
 
 syntax on
-let $mycolorfile=$myvimdir . "/colors/arcnice.vim"
+let $mycolorfile=$myvimdir . "/colors/perskjans.vim"
 so $mycolorfile
 
 "=====[ auto reload config if changed ]========
@@ -57,8 +57,9 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 
 set rtp+=$myvimdir/plugins/Vundle.vim
+"set rtp+=~/.vim/plugins/Vundle.vim
 
-" call vundle#begin()
+" CALL VUNdle#begin()
 " alternatively, pass a path where Vundle should install plugins
 call vundle#begin($myvimdir . '/plugins')
 
@@ -77,7 +78,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'kien/ctrlp.vim'
 let g:ctrlp_map = '<leader>f'
 
-Plugin 'msanders/snipmate.vim'
+"Plugin 'msanders/snipmate.vim'
 
 "Plugin 'rhysd/vim-clang-format'
 
@@ -479,7 +480,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
 
 
     " search and replace
-    nnoremap <leader>r :%s:::cg<Left><Left><Left><Left>
+    nnoremap <leader>rr :%s:::cg<Left><Left><Left><Left>
 
     " Toggle search highlight
     nnoremap <leader>h :set hlsearch! hlsearch?<CR>

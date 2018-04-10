@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SESSION_NAME=perskjans
+
+if [[ "$1" ]]; then
+    SESSION_NAME="$1"
+fi
+
+echo session: $SESSION_NAME
+
+if [[ `tmux ls 2>/dev/null | grep "$SESSION_NAME" | wc -l` -eq 0 ]]; then
+    tmux -2 new -s $SESSION_NAME
+else
+    tmux -2 a -t $SESSION_NAME
+fi
+
+

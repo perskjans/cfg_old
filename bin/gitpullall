@@ -1,0 +1,41 @@
+#!/bin/bash
+
+. ~/bin/git.conf
+. ~/bin/gitrepostatus
+
+if [[ $# -gt 0 ]]; then
+    FILTER="$1"
+else
+    FILTER="/"
+fi
+
+echo
+echo FILTER: "$FILTER"
+echo
+
+function pull()
+{
+    dir=$1
+    pushd $dir >/dev/null
+    result=$(git remote prune origin 2>&1)
+    result=$(git pull 2>&1)
+
+    if [[ ! $result =~ "Already up-to-date" ]]; then
+        echo $dir
+        echo -e "${FG_CYAN}${result}${CO_RESET}"
+        echo
+    fi
+
+    popd >/dev/null
+}
+
+repostatus
+
+dirs=$(cat $reposfile)
+
+for dir in $dirs;
+do
+    if [[ -d $dir ]] && [[ $dir =~ "$FILTER" ]]; then
+        pull $dir
+    fi
+done
