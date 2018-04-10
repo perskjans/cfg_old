@@ -93,8 +93,6 @@ function GitStatus
     if git rev-parse --git-dir >/dev/null 2>&1; then
         gs_branch=$(git branch | grep "^* " | cut -c 3-)
 
-        #echo -e "${FG_BLUE}[${CO_RESET}$gs_branch${FG_BLUE}]${CO_RESET}:"
-
         gs_gitstatus=$(CommitStatus)
 
         if [ $? -eq 0 ]; then
