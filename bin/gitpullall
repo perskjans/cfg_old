@@ -20,7 +20,7 @@ function pull()
     result=$(git remote prune origin 2>&1)
     result=$(git pull 2>&1)
 
-    if [[ ! $result =~ "Already up-to-date" ]]; then
+    if [[ ! $result =~ "up to date" ]] && [[ ! $result =~ "up-to-date" ]]; then
         echo $dir
         echo -e "${FG_CYAN}${result}${CO_RESET}"
         echo
@@ -35,7 +35,7 @@ dirs=$(cat $reposfile)
 
 for dir in $dirs;
 do
-    if [[ -d $dir ]] && [[ $dir =~ "$FILTER" ]]; then
+    if [[ -d $dir ]] && [[ $(echo $dir | egrep "$FILTER" | wc -l) -ne 0 ]]; then
         pull $dir
     fi
 done
