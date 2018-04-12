@@ -1,52 +1,41 @@
 #!/bin/bash
 
-red=`tput setaf 1`
-yellow=`tput setaf 3`
-blue=`tput setaf 4`
-reset_color=`tput sgr0`
+. ~/bin/git.conf
+. ~/bin/gitrepostatus
+
+if [[ $# -gt 0 ]]; then
+    FILTER="$1"
+else
+    FILTER="/"
+fi
+
+echo
+echo FILTER: "$FILTER"
+echo
 
 function pull()
 {
     dir=$1
-    color=$reset
+    pushd $dir >/dev/null
+    result=$(git remote prune origin 2>&1)
+    result=$(git pull 2>&1)
 
-    cd $dir
-    pwd
-    result=`git pull`
-
-    if [ $? -ne 0 ]; then
-        color=$red
+    if [[ ! $result =~ "up to date" ]] && [[ ! $result =~ "up-to-date" ]]; then
+        echo $dir
+        echo -e "${FG_CYAN}${result}${CO_RESET}"
+        echo
     fi
 
-    echo "${color}${result}${reset_color}"
-    echo
+    popd >/dev/null
 }
 
+repostatus
 
-echo
-echo ========== formaner ==========
-echo
+dirs=$(cat $reposfile)
 
-for dir in ~/projects/_formaner/*; do pull $dir ; done
-
-echo
-echo ========== tools ==========
-echo
-
-for dir in ~/projects/tools/*; do pull $dir ; done
-
-echo
-echo ========== hiera ==========
-echo
-
-for dir in ~/projects/hiera*; do pull $dir ; done
-
-echo
-echo ========== puppet ==========
-echo
-
-for dir in ~/projects/tools/*; do pull $dir ; done
-
-cd
-
-
+for dir in $dirs;
+do
+    if [[ -d $dir ]] && [[ $(echo $dir | egrep "$FILTER" | wc -l) -ne 0 ]]; then
+        pull $dir
+    fi
+done
