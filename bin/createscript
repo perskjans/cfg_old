@@ -1,0 +1,8 @@
+#!/bin/bash
+
+script=~/bin/"$1"
+
+
+echo "#!/bin/bash" > $script
+
+chmod +x $script

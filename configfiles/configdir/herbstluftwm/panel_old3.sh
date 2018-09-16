@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
@@ -7,17 +7,20 @@ if [ -z "$geometry" ] ;then
     echo "Invalid monitor $monitor"
     exit 1
 fi
+echo ${geometry[0]}
+echo ${geometry[1]}
+echo ${geometry[2]}
+echo ${geometry[3]}
 # geometry has the format W H X Y
 x=${geometry[0]}
 y=${geometry[1]}
-panel_width=${geometry[2]}
-panel_height=18
-
-hc pad $monitor $panel_height
-
-font="-misc-dejavu sans-medium-r-normal--13-0-0-0-p-0-iso8859-15"
-#font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
-
+panel_width=$((${geometry[2]} - 66))
+panel_height=16
+#use xorg-xfontsel to pick a new font :3
+#font="-*-terminesspowerline-medium-*-normal-*-12-*-*-*-*-*-*-*"
+font='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
+font2="-misc-fontawesome-medium-r-normal--0-0-0-12-p-0-iso10646-1"
+#font="-*-tewi-*-*-*-*-*-*-*-*-*-*-*-*"
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
@@ -56,7 +59,10 @@ else
       awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
     }
 fi
+# My Functions
 
+
+hc pad $monitor $panel_height
 
 {
     ### Event generator ###
@@ -69,20 +75,17 @@ fi
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.
-        date +$'date\t^fg(#efefef)%Y-%m-%d, %H:%M:%S^fg(#efefef)'
+    date +$'date\t^fg(#d3d3d3)%H:%M^fg(#505050), %a ^fg(#d3d3d3)%d^fg(#505050)-%m-%Y'
         sleep 1 || break
     done > >( uniq_linebuffered ) &
     childpid=$!
     hc --idle
     kill $childpid
-} 2>/dev/null |
-{
-
+} 2> /dev/null | {
     IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
     visible=true
     date=""
     windowtitle=""
-
     while true ; do
 
         ### Output ###
@@ -90,7 +93,7 @@ fi
         # and then waits for the next event to happen.
 
         bordercolor="#26221C"
-        sep="^bg()^fg($selbg)|"
+        separator="^bg()^fg($selbg)|"
         # draw tags
         for i in "${tags[@]}" ; do
             case ${i:0:1} in
@@ -115,38 +118,40 @@ fi
                 echo -n "^ca(1,\"${herbstclient_command[@]:-herbstclient}\" "
                 echo -n "focus_monitor \"$monitor\" && "
                 echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
-                echo -n "use \"${i:1}\") ${i:1} ^ca()"
+                #echo -n "use \"${i:1}\") ${i:1} ^ca()"
+        echo -n "use \"${i:1}\") ^fn(FontAwesome:size=9)${i:1}^fn() ^ca()"
             else
                 # non-clickable tags if using older dzen
                 echo -n " ${i:1} "
             fi
         done
-        echo -n "$sep^bg()^fg() ${windowtitle//^/^^} $sep"
-
-
-        #### small adjustments ####
-        icon_path="/usr/share/icons/stlarch_icons"
-
-        ## Volume
-        volico="^i($icon_path/vol1.xbm)"
-        vol=$(amixer -c 0 get Master | grep -o "[0-9]*%")
-        vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
-
-        ## Battery
-        if [[ $(cat /sys/class/power_supply/BAT0/status) == 'Charging' ]]; then
-            batico="^i($icon_path/ac10.xbm)"
+#        echo -n "$separator"
+#        echo -n "^bg()^fg() ${windowtitle//^/^^}"
+        #battery
+        bat=`cat /sys/class/power_supply/BAT1/capacity`
+        batstat=`cat /sys/class/power_supply/BAT1/status`
+        if (($batstat=='Charging'))
+        then
+            batico="^i(/usr/share/icons/stlarch_icons/ac10.xbm)"
         else
-            batico="^i($icon_path/batt5full.xbm)"
+            batico="^i(/usr/share/icons/stlarch_icons/batt5full.xbm)"
         fi
-        bat=$(cat /sys/class/power_supply/BAT0/capacity)
-        bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
+        bat="^fg($xicon)$batico ^fg($xtitle)bat ^fg($xfg)$bat^fg($xext)%"
+    #Vol
+    vol=$(amixer -c 0 get Master | tail -n 1 | cut -d '[' -f 2 | sed 's/%.*//g' | sed -n 1p)
+    #vol=$(amixer sget Master,0)
+    #pacman updates
+        #updates=`execi 200 checkupdates | wc -l`
+        #updates="^fg($xicon)^i(/usr/share/icons/stlarch_icons/pacman1.xbm) ^fg($xtitle)pac ^fg($xfg)$updates"
 
+        # small adjustments
+        #cpu_temp=$(echo -n $(sensors | grep "Core" | cut -b 16-19))
 
-        right="$sep^fg() $vol $sep^bg() $bat $sep^bg() $date $sep"
+        mpc_current=$(mpc current)
+        right="  ♫ $mpc_current $separator^fg() $vol $separator^fg() $bat $separator^bg() $date $separator"
         right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
-        width=$($textwidth "${font}" "$right_text_only    ")
-
+        width=$($textwidth "$font" "$right_text_only  ")
         echo -n "^pa($(($panel_width - $width)))$right"
         echo
 
@@ -203,10 +208,17 @@ fi
 
     ### dzen2 ###
     # After the data is gathered and processed, the output of the previous block
-    # gets piped to dzen2.
+    # gets piped to dzen2...or is it conky? If this ceases to work at any point
+    # try changing 'conky' to '/dev/null'
 
-} 2>/dev/null | dzen2 -w $panel_width -x $x -y 0 -fn "$font" -h $panel_height \
-    -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
-    -ta l -bg "$bgcolor" -fg '#efefef'
+#} 2> conky | dzen2 -w $panel_width -x $x -y $y -fn "$font" -h $panel_height \
+#    -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
+#    -ta l -bg "$bgcolor" -fg '#efefef' &
+} 2> /dev/null | dzen2 -w $panel_width -x 0 -y 0 -fn "$font" -h $panel_height \
+    -ta l -bg '#ff0000' -fg '#efefef' &
 
+#wait 2 seconds then load the stanlonetray
 
+sleep 2
+
+#stalonetray

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mkfontscale
+mkfontdir
+
+xset fp rehash
+fc-cache
+
+xset q

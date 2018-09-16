@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
@@ -11,13 +11,8 @@ fi
 x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
-panel_height=18
-
-hc pad $monitor $panel_height
-
-font="-misc-dejavu sans-medium-r-normal--13-0-0-0-p-0-iso8859-15"
-#font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
-
+panel_height=16
+font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
@@ -57,6 +52,7 @@ else
     }
 fi
 
+hc pad $monitor $panel_height
 
 {
     ### Event generator ###
@@ -69,20 +65,17 @@ fi
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.
-        date +$'date\t^fg(#efefef)%Y-%m-%d, %H:%M:%S^fg(#efefef)'
+        date +$'date\t^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
         sleep 1 || break
-    done > >( uniq_linebuffered ) &
+    done > >(uniq_linebuffered) &
     childpid=$!
     hc --idle
     kill $childpid
-} 2>/dev/null |
-{
-
+} 2> /dev/null | {
     IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
     visible=true
     date=""
     windowtitle=""
-
     while true ; do
 
         ### Output ###
@@ -90,7 +83,7 @@ fi
         # and then waits for the next event to happen.
 
         bordercolor="#26221C"
-        sep="^bg()^fg($selbg)|"
+        separator="^bg()^fg($selbg)|"
         # draw tags
         for i in "${tags[@]}" ; do
             case ${i:0:1} in
@@ -121,32 +114,13 @@ fi
                 echo -n " ${i:1} "
             fi
         done
-        echo -n "$sep^bg()^fg() ${windowtitle//^/^^} $sep"
-
-
-        #### small adjustments ####
-        icon_path="/usr/share/icons/stlarch_icons"
-
-        ## Volume
-        volico="^i($icon_path/vol1.xbm)"
-        vol=$(amixer -c 0 get Master | grep -o "[0-9]*%")
-        vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
-
-        ## Battery
-        if [[ $(cat /sys/class/power_supply/BAT0/status) == 'Charging' ]]; then
-            batico="^i($icon_path/ac10.xbm)"
-        else
-            batico="^i($icon_path/batt5full.xbm)"
-        fi
-        bat=$(cat /sys/class/power_supply/BAT0/capacity)
-        bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
-
-
-        right="$sep^fg() $vol $sep^bg() $bat $sep^bg() $date $sep"
+        echo -n "$separator"
+        echo -n "^bg()^fg() ${windowtitle//^/^^}"
+        # small adjustments
+        right="$separator^bg() $date $separator"
         right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
-        width=$($textwidth "${font}" "$right_text_only    ")
-
+        width=$($textwidth "$font" "$right_text_only    ")
         echo -n "^pa($(($panel_width - $width)))$right"
         echo
 
@@ -205,8 +179,6 @@ fi
     # After the data is gathered and processed, the output of the previous block
     # gets piped to dzen2.
 
-} 2>/dev/null | dzen2 -w $panel_width -x $x -y 0 -fn "$font" -h $panel_height \
+} 2> /dev/null | dzen2 -w $panel_width -x $x -y $y -fn "$font" -h $panel_height \
     -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
     -ta l -bg "$bgcolor" -fg '#efefef'
-
-

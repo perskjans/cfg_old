@@ -9,7 +9,8 @@ function ExitStatus
     gs_exitstatus=$?
 
     if [ $gs_exitstatus -ne 0 ]; then
-        echo -en "${FG_RED}Exit status: $gs_exitstatus ${CO_RESET}"
+        #echo -en "${FG_RED}Exit status: $gs_exitstatus ${CO_RESET}"
+        echo -en "${FG_RED} $gs_exitstatus ${CO_RESET}"
     fi
 }
 
@@ -34,42 +35,42 @@ function CommitStatus
         if [ -z "$added" ]; then
             added=1
             MaybeEchoComma
-            echo -en "${FG_YELLOW}Added${CO_RESET}"
+            echo -en "${FG_YELLOW}A${CO_RESET}"
         fi
     elif [[ $line == \?\?* ]]; then
         if [ -z "$untracked" ]; then
             untracked=1
             MaybeEchoComma
-            echo -en "${FG_CYAN}Untracked${CO_RESET}"
+            echo -en "${FG_CYAN}U${CO_RESET}"
         fi
     elif [[ $line == M* ]]; then
         if [ -z "$modified" ]; then
             modified=1
             MaybeEchoComma
-            echo -en "${FG_BLUE}Modified${CO_RESET}"
+            echo -en "${FG_BLUE}M${CO_RESET}"
         fi
     elif [[ $line == D* ]]; then
         if [ -z "$deleted" ]; then
             deleted=1
             MaybeEchoComma
-            echo -en "${FG_RED}Deleted${CO_RESET}"
+            echo -en "${FG_RED}D${CO_RESET}"
         fi
     elif [[ $line == R* ]]; then
         if [ -z "$renamed" ]; then
             renamed=1
             MaybeEchoComma
-            echo -en "${FG_MAGENTA}Renamed${CO_RESET}"
+            echo -en "${FG_MAGENTA}R${CO_RESET}"
         fi
     elif [[ $line == C* ]]; then
         if [ -z "$copied" ]; then
             copied=1
-            echo -en ", ${FG_MAGENTA}Copied${CO_RESET}"
+            echo -en ", ${FG_MAGENTA}C${CO_RESET}"
         fi
     elif [[ $line == U* ]]; then
         if [ -z "$unmerged" ]; then
             copied=1
             MaybeEchoComma
-            echo -en "${FG_MAGENTA}Updated-but-unmerged${CO_RESET}"
+            echo -en "${FG_MAGENTA}UU${CO_RESET}"
         fi
     else
         echo "UNKNOWN STATUS"

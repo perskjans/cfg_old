@@ -1,0 +1,17 @@
+#!/bin/bash
+# Change volume by percent unit
+# usage: changevolume [-/+]change
+# E.g. changevolume -3
+
+change="$1"
+
+current_volume=$(amixer -c 0 get Master | grep -o "[0-9]*%" | sed "s/%//")
+
+echo $current_volume
+
+new_volume=$((( $current_volume$change )))
+
+echo $new_volume
+
+echo amixer -c 0 -- sset Master playback $new_volume%
+amixer -c 0 -- sset Master playback $new_volume%
