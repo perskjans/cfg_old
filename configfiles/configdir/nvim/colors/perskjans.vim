@@ -32,7 +32,7 @@ set t_Co=256
 if exists("syntax_on")
   syntax reset
 endif
-let g:colors_name = "perskjans"
+"let g:colors_name = "perskjans"
 
 hi Boolean             cterm=NONE    ctermfg=135     ctermbg=NONE
 hi Character           cterm=NONE    ctermfg=5       ctermbg=NONE

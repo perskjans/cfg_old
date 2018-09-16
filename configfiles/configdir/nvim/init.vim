@@ -3,6 +3,8 @@ set encoding=utf-8
 
 let $myvimdir="~/.config/nvim"
 let MYVIMRC=$myvimdir . "/init.vim"
+let $workman=$myvimdir . "/workman.vim"
+so $workman
 
 syntax on
 let $mycolorfile=$myvimdir . "/colors/perskjans.vim"
@@ -11,6 +13,7 @@ so $mycolorfile
 "=====[ auto reload config if changed ]========
 augroup myvimrc
     au!
+
         au BufWritePost .vimrc so $MYVIMRC
         au BufWritePost init.vim so $MYVIMRC
 augroup END
@@ -47,7 +50,7 @@ endif
 " }}}
 
 " PLUGIN HANDLING -------------------------------------------------------- {{{
-"## neomake, vim-plug, matchit, vim-suround, supertab, ZoomWin, tComment, 
+"## neomake, vim-plug, matchit, vim-suround, supertab, ZoomWin, tComment,
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -57,7 +60,6 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 
 set rtp+=$myvimdir/plugins/Vundle.vim
-"set rtp+=~/.vim/plugins/Vundle.vim
 
 " CALL VUNdle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -66,12 +68,13 @@ call vundle#begin($myvimdir . '/plugins')
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+
 "Plugin 'andviro/flake8-vim'
 "let g:PyFlakeOnWrite = 1
 "let g:PyFlakeCheckers = 'pep8'
 "let g:PyFlakeAggressive = 0
 
-Plugin 'flazz/vim-colorschemes'
+"Plugin 'flazz/vim-colorschemes'
 
 "Plugin 'justmao945/vim-clang'
 
@@ -103,16 +106,16 @@ let g:airline#extensions#tabline#enabled = 1
 
 Plugin 'richsoni/vim-ecliptic'
 
-Plugin 'klen/python-mode'
-map <Leader>g :call RopeGotoDefinition()<CR>
-let ropevim_enable_shortcuts = 1
-let g:pymode_rope_goto_def_newwin = "vnew"
-let g:pymode_rope_extended_complete = 1
-let g:pymode_breakpoint = 1
-let g:pymode_sytax = 1
-let g:pymode_sytax_builtin_objs = 1
-let g:pymode_sytax_builtin_funcs = 1
-map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+"Plugin 'klen/python-mode'
+"map <Leader>g :call RopeGotoDefinition()<CR>
+"let ropevim_enable_shortcuts = 1
+"let g:pymode_rope_goto_def_newwin = "vnew"
+"let g:pymode_rope_extended_complete = 1
+"let g:pymode_breakpoint = 1
+"let g:pymode_sytax = 1
+"let g:pymode_sytax_builtin_objs = 1
+"let g:pymode_sytax_builtin_funcs = 1
+"map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
 "Plugin 'vim-airline/vim-airline-themes'
 
@@ -415,8 +418,8 @@ nnoremap <silent> <leader>5 :wincmd =<cr>
     nnoremap <RIGHT>  <C-W>l
 
     " Move between open buffers
-    nnoremap <C-l> :bn<CR> 
-    nnoremap <C-h> :bp<CR> 
+    nnoremap <C-l> :bn<CR>
+    nnoremap <C-h> :bp<CR>
 
 
     " === Misc ===
@@ -455,8 +458,8 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
     nnoremap <RIGHT>  <C-W>l
 
     " Move between open buffers
-    nnoremap <C-l> :bn<CR> 
-    nnoremap <C-h> :bp<CR> 
+    nnoremap <C-l> :bn<CR>
+    nnoremap <C-h> :bp<CR>
 
 
     " === Misc ===
@@ -466,7 +469,6 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
     "nnoremap , ;
     "nnoremap ' "
     "nnoremap " '
-    nnoremap <leader>w :w<CR>
     inoremap tn <Esc>
     nnoremap <leader>t :NERDTreeToggle<cr>
 
@@ -486,7 +488,8 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
     nnoremap <leader>h :set hlsearch! hlsearch?<CR>
 
     " Open vimrc
-    nnoremap <F3> :find $MYVIMRC<cr>
+    "nnoremap <F3> :e $MYVIMRC<cr>
+    nnoremap <F3> :e ~/linux_config/configfiles/configdir/nvim/init.vim<cr>
     nnoremap <leader>0 :so $MYVIMRC<CR>
 
     " Close current buffer
@@ -551,7 +554,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
 
     function! TrimTrailingWS()
         if search('\s\+$', 'cnw')
-            :%s/\s\s\+$//g
+            :%s/\s\+$//ge
         endif
     endfunction
 

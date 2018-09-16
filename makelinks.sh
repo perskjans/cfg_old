@@ -18,7 +18,7 @@ dirs=$(find . -maxdepth 1 -type d | sed "s/^\.//g" | sed "s/\.\///g")
 
 for dir in $dirs
 do
-    ln -sf $CONFIGDIR/$dir -t ~/.config/
+    ln -snf $CONFIGDIR/$dir -t ~/.config/
 done
 
 popd
@@ -40,5 +40,5 @@ popd
 
 # VIM
 ln -snf $CONFIGDIR/nvim  ~/.vim
-ln -snf $CONFIGDIR/nvim/init.vim  ~/.vimrc
+ln -nf $CONFIGDIR/nvim/init.vim  ~/.vimrc
 
