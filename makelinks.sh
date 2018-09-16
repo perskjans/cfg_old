@@ -40,5 +40,5 @@ popd
 
 # VIM
 ln -snf $CONFIGDIR/nvim  ~/.vim
-ln -nf $CONFIGDIR/nvim/init.vim  ~/.vimrc
+ln -snf $CONFIGDIR/nvim/init.vim  ~/.vimrc
 
