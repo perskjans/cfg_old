@@ -1,3 +1,2 @@
 Mongoose/*.out
-vim/plugins
-vim/tmp
+configfiles/configdir/nvim/plugins
