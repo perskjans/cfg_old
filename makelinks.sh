@@ -30,13 +30,11 @@ files=$(find . -maxdepth 1 | sed "s/^\.//g" | sed "s/\.\///g")
 
 for f in $files
 do
-    ln -snf $HOMEDIRFILES/$f ~/
+    ln -snf $HOMEDIRFILES$f ~/
 done
 
 popd
 
-# FONTS
-#ln -snfT $HOMEDIRFILES/.fonts ~/.local/share/fonts
 
 # VIM
 ln -snf $CONFIGDIR/nvim  ~/.vim
