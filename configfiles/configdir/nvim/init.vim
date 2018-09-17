@@ -4,7 +4,6 @@ set encoding=utf-8
 let $myvimdir="~/.config/nvim"
 let MYVIMRC=$myvimdir . "/init.vim"
 let $workman=$myvimdir . "/workman.vim"
-so $workman
 
 syntax on
 let $mycolorfile=$myvimdir . "/colors/perskjans.vim"
@@ -88,6 +87,8 @@ let g:ctrlp_map = '<leader>f'
 Plugin 'scrooloose/nerdtree'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeHijackNetrw=1
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
 
 Plugin 'tpope/vim-fugitive'
 
@@ -964,3 +965,5 @@ augroup END
 " }}}
 
 " END ---------------------------------------------------------------------- }}}
+
+so $workman
