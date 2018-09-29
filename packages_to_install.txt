@@ -1,0 +1,4 @@
+Spotify
+  https://flathub.org/repo/appstream/com.spotify.Client.flatpakref 
+  sudo sypper in flatpak
+  sudo flatpak install com.spotify.Client.flatpakref

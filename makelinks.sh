@@ -4,8 +4,8 @@ CURRENT_DIR=$(pwd)
 echo $CURRENT_DIR
 
 # Dirs
-if [ ! -d ~/linux_config ]; then
-    ln -snf $CURRENT_DIR ~/linux_config
+if [ ! -d ~/cfg ]; then
+    ln -snf $CURRENT_DIR ~/cfg
 fi
 ln -snf $CURRENT_DIR/bin ~/bin
 #ln -snf /media ~/media
