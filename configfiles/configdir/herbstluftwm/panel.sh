@@ -10,12 +10,14 @@ fi
 # geometry has the format W H X Y
 x=${geometry[0]}
 y=${geometry[1]}
-panel_width=${geometry[2]}
-panel_height=18
+#panel_width=${geometry[2]}
+panel_width=$((${geometry[2]} - 55))
+panel_height=36
 
 hc pad $monitor $panel_height
 
-font="-misc-dejavu sans-medium-r-normal--13-0-0-0-p-0-iso8859-15"
+fonsize=20
+font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
 #font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
 bgcolor=$(hc get frame_border_normal_color)
@@ -90,7 +92,7 @@ fi
         # and then waits for the next event to happen.
 
         bordercolor="#26221C"
-        sep="^bg()^fg($selbg)|"
+        SEP="^bg()^fg($selbg)|^bg()"
         # draw tags
         for i in "${tags[@]}" ; do
             case ${i:0:1} in
@@ -121,33 +123,39 @@ fi
                 echo -n " ${i:1} "
             fi
         done
-        echo -n "$sep^bg()^fg() ${windowtitle//^/^^} $sep"
+        echo -n "$SEP^fg() ${windowtitle//^/^^} $SEP"
 
 
         #### small adjustments ####
         icon_path="/usr/share/icons/stlarch_icons"
 
         ## Volume
-        volico="^i($icon_path/vol1.xbm)"
+        #volico="^i($icon_path/vol1.xbm)"
+        volico="VOL"
         vol=$(amixer -c 0 get Master | grep -o "[0-9]*%")
         vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
 
         ## Battery
-        if [[ $(cat /sys/class/power_supply/BAT0/status) == 'Charging' ]]; then
-            batico="^i($icon_path/ac10.xbm)"
+        power='cat /sys/class/power_supply/BAT0/status'
+        if [[ $($power/BAT0/status) == 'Charging' ]] || [[ $($power/BAT1/status) == 'Charging' ]]; then
+            #batico="^i($icon_path/ac10.xbm)"
+            batico="PWR"
         else
-            batico="^i($icon_path/batt5full.xbm)"
+            #batico="^i($icon_path/batt5full.xbm)"
+            batico="BAT"
         fi
-        bat=$(cat /sys/class/power_supply/BAT0/capacity)
+        bat=$(cat /sys/class/power_supply/BAT1/capacity)
         bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
 
 
-        right="$sep^fg() $vol $sep^bg() $bat $sep^bg() $date $sep"
-        right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
+        right="$SEP $vol $SEP $bat $SEP $date $SEP"
+        #right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
+        right_text_only=$(echo -n "$right" | sed 's/\s\+$//g')
         # get width of right aligned text.. and add some space..
-        width=$($textwidth "${font}" "$right_text_only    ")
+        width=$($textwidth "${font}" "$right_text_only")
 
-        echo -n "^pa($(($panel_width - $width)))$right"
+        PADDING=$(($panel_width - $width))
+        echo -n "^pa($PADDING)$right $panel_width $width $PADDING"
         echo
 
         ### Data handling ###
@@ -207,6 +215,10 @@ fi
 
 } 2>/dev/null | dzen2 -w $panel_width -x $x -y 0 -fn "$font" -h $panel_height \
     -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
-    -ta l -bg "$bgcolor" -fg '#efefef'
+    -ta l -bg "$bgcolor" -fg '#efefef' &
+
+    sleep 2
+
+    stalonetray
 
 

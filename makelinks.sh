@@ -3,12 +3,16 @@
 CURRENT_DIR=$(pwd)
 echo $CURRENT_DIR
 
+if [[ $CURRENT_DIR == $HOME ]]; then
+    echo -e "\nYou must run this script from the directory of the script!\n"
+fi
+
+
 # Dirs
 if [ ! -d ~/cfg ]; then
     ln -snf $CURRENT_DIR ~/cfg
 fi
 ln -snf $CURRENT_DIR/bin ~/bin
-#ln -snf /media ~/media
 
 mkdir -p ~/.config
 
@@ -40,3 +44,7 @@ popd
 ln -snf $CONFIGDIR/nvim  ~/.vim
 ln -snf $CONFIGDIR/nvim/init.vim  ~/.vimrc
 
+# For easier use of plugins in vim
+if [[ ! -d ~/.vim/plugins/Vundle.vim ]]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/plugins/Vundle.vim
+fi

@@ -22,15 +22,21 @@ Mod=Mod4   # Use the super key as the main modifier
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-q close
-#hc keybind $Mod-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
-#hc keybind $Mod-Return spawn termite
-hc keybind $Mod-Return spawn konsole
-#hc keybind $Mod-Return spawn st
-hc keybind $Mod-b spawn chromium
+
+TERMINAL=konsole
+#TERMINAL=st
+#TERMINAL=termite
+BROWSER=chromium
+#BROWSER=google-chrome
+hc keybind $Mod-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
+#hc keybind $Mod-b spawn chromium
+hc keybind $Mod-b spawn $BROWSER
 hc keybind $Mod-d spawn dmenu_run
 
-hc keybind XF86AudioLowerVolume spawn amixer -q -- sset Master playback 5%-
-hc keybind XF86AudioRaiseVolume spawn amixer -q -- sset Master playback 5%+
+#hc keybind XF86AudioLowerVolume spawn amixer -q -- sset Master playback 5%-
+#hc keybind XF86AudioRaiseVolume spawn amixer -q -- sset Master playback 5%+
+hc keybind XF86AudioLowerVolume spawn amixer -q -c 0 set Master playback 1dB-
+hc keybind XF86AudioRaiseVolume spawn amixer -q -c 0 set Master playback 1dB+
 hc keybind XF86AudioMute spawn amixer -q set Master toggle
 hc keybind XF86MonBrightnessDown spawn xbacklight -dec 5
 hc keybind XF86MonBrightnessUp spawn xbacklight -inc 5
@@ -204,4 +210,4 @@ done
 
 ## Autostart ##
 #exec feh --bg-scale ~/pictures/Abinden.jpg
-exec xrandr --output HDMI-1 --mode 1920x1080 --pos 1366x0 --rotate normal --output eDP-1 --primary --mode 1366x768 --pos 0x0 --rotate normal
+#exec xrandr --output HDMI-1 --mode 1920x1080 --pos 1366x0 --rotate normal --output eDP-1 --primary --mode 1366x768 --pos 0x0 --rotate normal

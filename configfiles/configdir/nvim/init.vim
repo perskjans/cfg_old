@@ -489,9 +489,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
     nnoremap <leader>h :set hlsearch! hlsearch?<CR>
 
     " Open vimrc
-    "nnoremap <F3> :e $MYVIMRC<cr>
-    nnoremap <F3> :e ~/linux_config/configfiles/configdir/nvim/init.vim<cr>
-    nnoremap <leader>0 :so $MYVIMRC<CR>
+    nnoremap <F3> :e $MYVIMRC<cr>
 
     " Close current buffer
     nnoremap <leader>b :bd<CR>
