@@ -136,26 +136,28 @@ fi
         vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
 
         ## Battery
-        power='cat /sys/class/power_supply/BAT0/status'
-        if [[ $($power/BAT0/status) == 'Charging' ]] || [[ $($power/BAT1/status) == 'Charging' ]]; then
-            #batico="^i($icon_path/ac10.xbm)"
-            batico="PWR"
-        else
-            #batico="^i($icon_path/batt5full.xbm)"
-            batico="BAT"
+        if [[ -d "/sys/class/power_supply/BAT*" ]]; then
+            power='cat /sys/class/power_supply/BAT0/status'
+            if [[ $($power/BAT0/status) == 'Charging' ]] || [[ $($power/BAT1/status) == 'Charging' ]]; then
+                #batico="^i($icon_path/ac10.xbm)"
+                batico="PWR"
+            else
+                #batico="^i($icon_path/batt5full.xbm)"
+                batico="BAT"
+            fi
+            bat=$(cat /sys/class/power_supply/BAT1/capacity)
+            bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
         fi
-        bat=$(cat /sys/class/power_supply/BAT1/capacity)
-        bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
 
 
         right="$SEP $vol $SEP $bat $SEP $date $SEP"
-        #right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
-        right_text_only=$(echo -n "$right" | sed 's/\s\+$//g')
+        right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
+        #right_text_only=$(echo -n "$right" | sed 's/\s\+$//g')
         # get width of right aligned text.. and add some space..
         width=$($textwidth "${font}" "$right_text_only")
 
         PADDING=$(($panel_width - $width))
-        echo -n "^pa($PADDING)$right $panel_width $width $PADDING"
+        echo -n "^pa($PADDING)$right"
         echo
 
         ### Data handling ###
@@ -219,6 +221,6 @@ fi
 
     sleep 2
 
-    stalonetray
-
+    nm-applet &
+    stalonetray &
 
