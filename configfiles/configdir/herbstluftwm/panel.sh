@@ -136,8 +136,8 @@ fi
         vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
 
         ## Battery
-        if [[ -d "/sys/class/power_supply/BAT*" ]]; then
-            power='cat /sys/class/power_supply/BAT0/status'
+        if [[ $(ls /sys/class/power_supply/ | grep BAT -c) -ne 0 ]]; then
+            power='cat /sys/class/power_supply/'
             if [[ $($power/BAT0/status) == 'Charging' ]] || [[ $($power/BAT1/status) == 'Charging' ]]; then
                 #batico="^i($icon_path/ac10.xbm)"
                 batico="PWR"
@@ -151,8 +151,8 @@ fi
 
 
         right="$SEP $vol $SEP $bat $SEP $date $SEP"
-        right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
-        #right_text_only=$(echo -n "$right" | sed 's/\s\+$//g')
+        #right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
+        right_text_only=$(echo -n "$right" | sed 's/\s\+$//g')
         # get width of right aligned text.. and add some space..
         width=$($textwidth "${font}" "$right_text_only")
 
@@ -217,10 +217,12 @@ fi
 
 } 2>/dev/null | dzen2 -w $panel_width -x $x -y 0 -fn "$font" -h $panel_height \
     -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
-    -ta l -bg "$bgcolor" -fg '#efefef' &
+    -ta l -bg "$bgcolor" -fg '#efefef'
 
-    sleep 2
+    if [[ $(pgrep -c stalonetray) -eq 0 ]];then
+        sleep 2
 
-    nm-applet &
-    stalonetray &
+        nm-applet &
+        stalonetray &
+    fi
 
