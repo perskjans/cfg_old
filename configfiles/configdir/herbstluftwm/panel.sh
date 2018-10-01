@@ -17,7 +17,8 @@ panel_height=36
 hc pad $monitor $panel_height
 
 fonsize=20
-font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
+#font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
+font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
 #font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
 bgcolor=$(hc get frame_border_normal_color)
@@ -136,16 +137,21 @@ fi
         vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
 
         ## Battery
-        if [[ $(ls /sys/class/power_supply/ | grep BAT -c) -ne 0 ]]; then
-            power='cat /sys/class/power_supply/'
-            if [[ $($power/BAT0/status) == 'Charging' ]] || [[ $($power/BAT1/status) == 'Charging' ]]; then
+        powerdir=/sys/class/power_supply/
+        if [[ $(ls $powerdir/BAT*) ]]; then
+            batstat=""
+            for f in /sys/class/power_supply/BAT*/status
+            do
+                batstat=$(cat $f)-$batstat
+            done
+            if [[ $batstat == *"ischarging"* ]]; then
                 #batico="^i($icon_path/ac10.xbm)"
-                batico="PWR"
+                batico="BAT"
             else
                 #batico="^i($icon_path/batt5full.xbm)"
-                batico="BAT"
+                batico="PWR"
             fi
-            bat=$(cat /sys/class/power_supply/BAT1/capacity)
+            bat=$(cat /sys/class/power_supply/BAT0/capacity)
             bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
         fi
 

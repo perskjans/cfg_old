@@ -23,12 +23,18 @@ hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-q close
 
-TERMINAL=konsole
-#TERMINAL=st
-#TERMINAL=termite
 BROWSER=chromium
 #BROWSER=google-chrome
-hc keybind $Mod-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
+
+TERM=konsole
+#TERM=st
+#TERM=termite
+
+if [[ ! $(which $TERM) ]]; then
+    TERM=xfce4-terminal
+fi
+
+hc keybind $Mod-Return spawn ${TERM}
 #hc keybind $Mod-b spawn chromium
 hc keybind $Mod-b spawn $BROWSER
 hc keybind $Mod-d spawn dmenu_run
