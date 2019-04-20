@@ -12,7 +12,6 @@ so $mycolorfile
 "=====[ auto reload config if changed ]========
 augroup myvimrc
     au!
-
         au BufWritePost .vimrc so $MYVIMRC
         au BufWritePost init.vim so $MYVIMRC
 augroup END
