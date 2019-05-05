@@ -17,8 +17,8 @@ panel_height=36
 hc pad $monitor $panel_height
 
 fonsize=20
-#font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
-font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
+font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
+#font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
 #font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
 bgcolor=$(hc get frame_border_normal_color)
