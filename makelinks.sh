@@ -48,3 +48,10 @@ ln -snf $CONFIGDIR/nvim/init.vim  ~/.vimrc
 if [[ ! -d ~/.vim/plugins/Vundle.vim ]]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/plugins/Vundle.vim
 fi
+
+DCDIR=$CURRENT_DIR/dc++/
+pushd $DCDIR
+
+for f in *; do ln -snf ${DCDIR}$f ~/.dc++/$f ; done
+
+popd
