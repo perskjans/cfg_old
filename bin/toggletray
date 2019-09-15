@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pid=$(pgrep stalonetray)
+if [[ "$pid" != ""  ]]; then
+    kill $pid
+else
+    stalonetray &
+fi

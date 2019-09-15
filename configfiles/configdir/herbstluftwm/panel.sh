@@ -1,28 +1,31 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
+HC=herbstclient
+
 monitor=${1:-0}
-geometry=( $(herbstclient monitor_rect "$monitor") )
+geometry=( $($HC monitor_rect "$monitor") )
 if [ -z "$geometry" ] ;then
     echo "Invalid monitor $monitor"
     exit 1
 fi
-# geometry has the format W H X Y
+# geometry has the format X Y W H
 x=${geometry[0]}
 y=${geometry[1]}
-#panel_width=${geometry[2]}
-panel_width=$((${geometry[2]} - 55))
+panel_width=${geometry[2]}
+panel_width=3840
 panel_height=36
 
-hc pad $monitor $panel_height
+$HC pad $monitor $panel_height
 
 fonsize=20
 font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
 #font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
-#font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
+font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
-bgcolor=$(hc get frame_border_normal_color)
-selbg=$(hc get window_border_active_color)
+bgcolor=$($HC get frame_border_normal_color)
+#bgcolor='#101010'
+fgcolor='#efefef'
+selbg=$($HC get window_border_active_color)
 selfg='#101010'
 
 ####
@@ -66,65 +69,123 @@ fi
     # based on different input data (mpc, date, hlwm hooks, ...) this generates events, formed like this:
     #   <eventname>\t<data> [...]
     # e.g.
-    #   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
+    #   date    ^fg($fgcolor)18:33^fg(#909090), 2013-10-^fg($fgcolor)29
 
     #mpc idleloop player &
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.
-        date +$'date\t^fg(#efefef)%Y-%m-%d, %H:%M:%S^fg(#efefef)'
+        date +$'date\t%Y-%m-%d, %H:%M:%S'
         sleep 1 || break
     done > >( uniq_linebuffered ) &
     childpid=$!
-    hc --idle
+    $HC --idle
     kill $childpid
 } 2>/dev/null |
+
 {
 
-    IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
+    IFS=$'\t' read -ra tags <<< "$($HC tag_status $monitor)"
     visible=true
-    date=""
-    windowtitle=""
+    date=$(date +$'%Y-%m-%d, %H:%M:%S')
+    windowtitle="No window name set"
 
     while true ; do
+
+        ### Data handling ###
+        # This part handles the events generated in the event loop, and sets
+        # internal variables based on them. The event and its arguments are
+        # read into the array cmd, then action is taken depending on the event
+        # name.
+        # "Special" events (quit_panel/togglehidepanel/reload) are also handled
+        # here.
+
+        # wait for next event
+        IFS=$'\t' read -ra cmd || break
+        # find out event origin
+        case "${cmd[0]}" in
+            tag*)
+                #echo "resetting tags" >&2
+                IFS=$'\t' read -ra tags <<< "$($HC tag_status $monitor)"
+                ;;
+            date)
+                #echo "resetting date" >&2
+                date="${cmd[@]:1}"
+                ;;
+            quit_panel)
+                exit
+                ;;
+            togglehidepanel)
+                currentmonidx=$($HC list_monitors | sed -n '/\[FOCUS\]$/s/:.*//p')
+                if [ "${cmd[1]}" -ne "$monitor" ] ; then
+                    continue
+                fi
+                if [ "${cmd[1]}" = "current" ] && [ "$currentmonidx" -ne "$monitor" ] ; then
+                    continue
+                fi
+                echo "^togglehide()"
+                if $visible ; then
+                    visible=false
+                    $HC pad $monitor 0
+                else
+                    visible=true
+                    $HC pad $monitor $panel_height
+                fi
+                ;;
+            reload)
+                exit
+                ;;
+            focus_changed|window_title_changed)
+                windowtitle="${cmd[@]:2}"
+                ;;
+            #player)
+            #    ;;
+        esac
 
         ### Output ###
         # This part prints dzen data based on the _previous_ data handling run,
         # and then waits for the next event to happen.
 
         bordercolor="#26221C"
-        SEP="^bg()^fg($selbg)|^bg()"
+        SEP="^bg()^fg($selbg)|^fg()"
         # draw tags
+        unset TAGS
+        TAGS=''
         for i in "${tags[@]}" ; do
+            unset TAG
+            TAG=''
             case ${i:0:1} in
                 '#')
-                    echo -n "^bg($selbg)^fg($selfg)"
+                    #echo -n "^bg($selbg)^fg($selfg)"
+                    TAG="$TAG^bg($selbg)^fg($selfg)"
                     ;;
                 '+')
-                    echo -n "^bg(#9CA668)^fg(#141414)"
+                    #echo -n "^bg(#9CA668)^fg(#141414)"
+                    TAG="$TAG^bg(#9CA668)^fg(#141414)"
                     ;;
                 ':')
-                    echo -n "^bg()^fg(#ffffff)"
+                    #echo -n "^bg()^fg(#ffffff)"
+                    TAG="$TAG^bg()^fg(#ffffff)"
                     ;;
                 '!')
-                    echo -n "^bg(#FF0675)^fg(#141414)"
+                    #echo -n "^bg(#FF0675)^fg(#141414)"
+                    TAG="$TAG^bg(#FF0675)^fg(#141414)"
                     ;;
                 *)
-                    echo -n "^bg()^fg(#ababab)"
+                    #echo -n "^bg()^fg(#ababab)"
+                    TAG="$TAG^bg()^fg(#ababab)"
                     ;;
             esac
             if [ ! -z "$dzen2_svn" ] ; then
                 # clickable tags if using SVN dzen
-                echo -n "^ca(1,\"${herbstclient_command[@]:-herbstclient}\" "
-                echo -n "focus_monitor \"$monitor\" && "
-                echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
-                echo -n "use \"${i:1}\") ${i:1} ^ca()"
+                TAG="$TAG^ca(1,\"herbstclient\" focus_monitor \"$monitor\" && \"herbstclient\" use \"${i:1}\") ${i:1} ^ca()"
             else
                 # non-clickable tags if using older dzen
-                echo -n " ${i:1} "
+                TAG="$TAG ${i:1} "
             fi
+            TAGS="$TAGS$TAG"
         done
-        echo -n "$SEP^fg() ${windowtitle//^/^^} $SEP"
+        echo -n "$TAGS$SEP   ^fg()${windowtitle//^/^^}   $SEP"
 
 
         #### small adjustments ####
@@ -133,8 +194,8 @@ fi
         ## Volume
         #volico="^i($icon_path/vol1.xbm)"
         volico="VOL"
-        vol=$(amixer -c 0 get Master | grep -o "[0-9]*%")
-        vol="^fg($xicon)$volico ^fg($xtitle)^fg($xfg)$vol^fg($xext)"
+        vol=$(amixer -c 0 get Master | grep -o "[0-9]*%" | head -1)
+        vol="$volico $vol"
 
         ## Battery
         powerdir=/sys/class/power_supply/
@@ -152,83 +213,33 @@ fi
                 batico="PWR"
             fi
             bat=$(cat /sys/class/power_supply/BAT0/capacity)
-            bat="^fg($xicon)$batico ^fg($xtitle)^fg($xfg)$bat^fg($xext)%"
+            bat="$batico $bat%"
         fi
 
+        TRAY="^ca(1,\"$HOME/bin/toggletray\") A^ca()"
 
-        right="$SEP $vol $SEP $bat $SEP $date $SEP"
-        #right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
-        right_text_only=$(echo -n "$right" | sed 's/\s\+$//g')
+        SEPCHAR='|'
+        right="$SEP $vol $SEP $bat $SEP $date $SEP $TRAY"
+        right_unformatted="$SEPCHAR $vol $SEPCHAR $bat $SEPCHAR $date $SEPCHAR A"
+
+        #right_text_only=$(echo -n "$right" | sed "s.\^[^(]*([^)]*)..g")
+        #right_text_only=$(echo -n "$right" | sed "s/\s\+$//g")
+
         # get width of right aligned text.. and add some space..
-        width=$($textwidth "${font}" "$right_text_only")
+        width=$($textwidth "${font}" "$right_unformatted")
+        right=$(echo -n "$right" | sed "s.$SEPCHAR.$SEP.g")
 
-        PADDING=$(($panel_width - $width))
+        PADDING=$(($panel_width - $width * 2 + 20))
         echo -n "^pa($PADDING)$right"
         echo
 
-        ### Data handling ###
-        # This part handles the events generated in the event loop, and sets
-        # internal variables based on them. The event and its arguments are
-        # read into the array cmd, then action is taken depending on the event
-        # name.
-        # "Special" events (quit_panel/togglehidepanel/reload) are also handled
-        # here.
-
-        # wait for next event
-        IFS=$'\t' read -ra cmd || break
-        # find out event origin
-        case "${cmd[0]}" in
-            tag*)
-                #echo "resetting tags" >&2
-                IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
-                ;;
-            date)
-                #echo "resetting date" >&2
-                date="${cmd[@]:1}"
-                ;;
-            quit_panel)
-                exit
-                ;;
-            togglehidepanel)
-                currentmonidx=$(hc list_monitors | sed -n '/\[FOCUS\]$/s/:.*//p')
-                if [ "${cmd[1]}" -ne "$monitor" ] ; then
-                    continue
-                fi
-                if [ "${cmd[1]}" = "current" ] && [ "$currentmonidx" -ne "$monitor" ] ; then
-                    continue
-                fi
-                echo "^togglehide()"
-                if $visible ; then
-                    visible=false
-                    hc pad $monitor 0
-                else
-                    visible=true
-                    hc pad $monitor $panel_height
-                fi
-                ;;
-            reload)
-                exit
-                ;;
-            focus_changed|window_title_changed)
-                windowtitle="${cmd[@]:2}"
-                ;;
-            #player)
-            #    ;;
-        esac
     done
 
     ### dzen2 ###
     # After the data is gathered and processed, the output of the previous block
     # gets piped to dzen2.
 
-} 2>/dev/null | dzen2 -x 0 -y 0 -w $panel_width -h $panel_height -fn "$font" \
-    -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
-    -ta l -bg "$bgcolor" -fg '#efefef'
-
-    if [[ $(pgrep -c stalonetray) -eq 0 ]];then
-        sleep 2
-
-        nm-applet &
-        stalonetray &
-    fi
-
+#}
+} 2>/dev/null | dzen2 -x $x -y $y -w $panel_width -h $panel_height -fn "$font" \
+    #-e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
+    -ta l -bg "$bgcolor" -fg "$fgcolor" &
