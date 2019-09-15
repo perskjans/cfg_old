@@ -221,7 +221,7 @@ fi
     # After the data is gathered and processed, the output of the previous block
     # gets piped to dzen2.
 
-} 2>/dev/null | dzen2 -w $panel_width -x $x -y 0 -fn "$font" -h $panel_height \
+} 2>/dev/null | dzen2 -x 0 -y 0 -w $panel_width -h $panel_height -fn "$font" \
     -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
     -ta l -bg "$bgcolor" -fg '#efefef'
 

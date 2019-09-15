@@ -26,8 +26,8 @@ hc keybind $Mod-q close
 BROWSER=chromium
 #BROWSER=google-chrome
 
-TERM=konsole
-#TERM=st
+#TERM=konsole
+TERM=st
 #TERM=termite
 
 if [[ ! $(which $TERM) ]]; then
@@ -206,7 +206,7 @@ hc set tree_style '╾│ ├└╼─┐'
 # or simply:
 hc detect_monitors
 
-# find the panel
+## find the panel
 panel=~/.config/herbstluftwm/panel.sh
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
