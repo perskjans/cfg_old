@@ -1,4 +1,32 @@
-Spotify
-  Download  https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
-  sudo sypper in flatpak
-  sudo flatpak install com.spotify.Client.flatpakref
+alsa-utils
+arandr
+autoconf
+automake
+bash
+bash-completion
+dmenu
+dzen2
+fakeroot
+fossil
+gcc
+herbstluftwm
+jshon
+make
+multilib-devel
+neovim
+patch
+pkg-config
+tmux
+ttf-dejavu
+unrar
+unzip
+vifm
+wget
+xorg-server
+xorg-xinit
+xorg-server-utils
+mesa
+xf86-video-vesa
+xorg-twm xorg-xclock xterm
+#linux-headers catalyst-dkms catalyst-utils lib32-catalyst-utils
+#nvidia lib32-nvidia-utils

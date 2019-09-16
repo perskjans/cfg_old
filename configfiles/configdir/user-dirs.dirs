@@ -1,6 +1,5 @@
 # This file is used by xdg-user-dir
 
-XDG_CONFIG_HOME="$HOME/.config"
 XDG_DESKTOP_DIR="$HOME/dsk"
 XDG_DOWNLOAD_DIR="$HOME/dwn"
 XDG_TEMPLATES_DIR="$HOME/tpl"

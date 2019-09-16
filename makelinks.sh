@@ -17,7 +17,7 @@ ln -snf $CURRENT_DIR/bin ~/bin
 CONFIGDIR=$CURRENT_DIR/configfiles/configdir
 pushd $CONFIGDIR >/dev/null
 
-for dir in /tmp $(grep -o '/.*"$' user-dirs.dirs | tr '"\n' ' ')
+for dir in /.config /tmp $(grep -o '/.*"$' user-dirs.dirs | tr '"\n' ' ')
 do
     mkdir -p -m 755 $HOME$dir
 done
