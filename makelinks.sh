@@ -1,7 +1,6 @@
 #!/bin/bash
 
 CURRENT_DIR=$(pwd)
-echo $CURRENT_DIR
 
 if [[ $CURRENT_DIR == $HOME ]]; then
     echo -e "\nYou must run this script from the directory of the script!\n"
@@ -15,26 +14,37 @@ if [ ! -d ~/cfg ]; then
 fi
 ln -snf $CURRENT_DIR/bin ~/bin
 
-mkdir -p ~/.config
-
 CONFIGDIR=$CURRENT_DIR/configfiles/configdir
 pushd $CONFIGDIR >/dev/null
-dirs=$(find . -maxdepth 1 -type d | sed "s/^\.//g" | sed "s/\.\///g")
 
-for dir in $dirs
+for dir in /tmp $(grep -o '/.*"$' user-dirs.dirs | tr '"\n' ' ')
 do
-    targetdir=~/.config/$dir
-    if [[ -L $targetdir ]]; then
-        rm $targetdir
+    mkdir -p -m 755 $HOME$dir
+done
+
+for dir in Desktop Documents Downloads Music Pictures Public Templates Videos
+do
+    rm -rf $HOME/$dir
+done
+
+files=$(find . -maxdepth 1 | sed "s/^\.//g")
+
+for file in $files
+do
+    file=${file#/}
+    path=$CONFIGDIR/$file
+
+    if [[ -d "$path" ]]; then
+        mkdir -m 755 -p ~/.config/$file
+        chmod 755 ~/.config/$file  # in case the dir already exists with faulty permissions
+
+        for subfile in $path/*
+        do
+            ln -snf $subfile -t ~/.config/$file/
+        done
+    else
+        ln -snf $path -t ~/.config/
     fi
-
-    mkdir -m 755 -p $targetdir
-    chmod 755 $targetdir  # in case the dir already exists with faulty permissions
-
-    for file in $CONFIGDIR/$dir/*
-    do
-        ln -snf $file -t ~/.config/$dir/
-    done
 done
 
 popd >/dev/null
@@ -67,4 +77,3 @@ ln -snf $CONFIGDIR/nvim/init.vim  ~/.vimrc
 if [[ ! -d ~/.vim/plugins/Vundle.vim ]]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/plugins/Vundle.vim
 fi
-
