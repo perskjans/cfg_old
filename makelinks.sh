@@ -17,27 +17,45 @@ ln -snf $CURRENT_DIR/bin ~/bin
 mkdir -p ~/.config
 
 CONFIGDIR=$CURRENT_DIR/configfiles/configdir
-pushd $CONFIGDIR
+pushd $CONFIGDIR >/dev/null
 dirs=$(find . -maxdepth 1 -type d | sed "s/^\.//g" | sed "s/\.\///g")
 
 for dir in $dirs
 do
-    ln -snf $CONFIGDIR/$dir -t ~/.config/
+    targetdir=~/.config/$dir
+    if [[ -L $targetdir ]]; then
+        rm $targetdir
+    fi
+
+    mkdir -m 755 -p $targetdir
+    chmod 755 $targetdir  # in case the dir already exists with faulty permissions
+
+    for file in $CONFIGDIR/$dir/*
+    do
+        ln -snf $file -t ~/.config/$dir/
+    done
 done
 
-popd
+popd >/dev/null
 echo
 
 HOMEDIRFILES=$CURRENT_DIR/configfiles/homedir
-pushd $HOMEDIRFILES
-files=$(find . -maxdepth 1 | sed "s/^\.//g" | sed "s/\.\///g")
+pushd $HOMEDIRFILES >/dev/null
+files=$(find . -maxdepth 1 | sed "s/^\.//g")
 
-for f in $files
+for file in $files
 do
-    ln -snf $HOMEDIRFILES$f ~/
+    file=${file#/}
+    path=$HOMEDIRFILES/$file
+    if [[ -d "$path" ]]; then
+        mkdir -m 755 -p ~/$file
+        chmod 755 ~/$file  # in case the dir already exists with faulty permissions
+    else
+        ln -snf $path -t ~/
+    fi
 done
 
-popd
+popd >/dev/null
 
 
 # VIM
@@ -49,9 +67,3 @@ if [[ ! -d ~/.vim/plugins/Vundle.vim ]]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/plugins/Vundle.vim
 fi
 
-DCDIR=$CURRENT_DIR/dc++/
-pushd $DCDIR
-
-for f in *; do ln -snf ${DCDIR}$f ~/.dc++/$f ; done
-
-popd
