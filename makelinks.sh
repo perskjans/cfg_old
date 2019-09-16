@@ -5,6 +5,7 @@ echo $CURRENT_DIR
 
 if [[ $CURRENT_DIR == $HOME ]]; then
     echo -e "\nYou must run this script from the directory of the script!\n"
+    exit 1
 fi
 
 
