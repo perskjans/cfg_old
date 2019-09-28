@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 HC=herbstclient
 
@@ -18,8 +18,8 @@ panel_height=36
 $HC pad $monitor $panel_height
 
 fonsize=20
-font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
-#font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
+#font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
+font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
 font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
 bgcolor=$($HC get frame_border_normal_color)
@@ -230,6 +230,7 @@ fi
         right=$(echo -n "$right" | sed "s.$SEPCHAR.$SEP.g")
 
         PADDING=$(($panel_width - $width * 2 + 20))
+        PADDING=1300
         echo -n "^pa($PADDING)$right"
         echo
 
@@ -240,6 +241,4 @@ fi
     # gets piped to dzen2.
 
 #}
-} 2>/dev/null | dzen2 -x $x -y $y -w $panel_width -h $panel_height -fn "$font" \
-    #-e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
-    -ta l -bg "$bgcolor" -fg "$fgcolor" &
+} 2>/dev/null | dzen2 -x $x -y $y -w $panel_width -h $panel_height -fn "$font" -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' -ta l -bg "$bgcolor" -fg "$fgcolor" &

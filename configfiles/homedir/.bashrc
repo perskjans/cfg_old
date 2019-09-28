@@ -82,5 +82,5 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias g='git'
 alias svim='sudo nvim -u ~/nvim/init.vim'
 alias gpa='sh ~/bin/git_pull_all.sh'
+alias psa='ps aux | grep'
 
-export RANGER_LOAD_DEFAULT_RC=FALSE
