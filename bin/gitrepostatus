@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 . ~/bin/git.conf
 
-function repostatus()
+repostatus()
 {
     reposfile_tmp=$reposfile\_tmp
     cat $reposfile | sort | uniq > $reposfile_tmp

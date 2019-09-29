@@ -12,3 +12,13 @@ for f in ~/cfg/fonts/*
 do
     ln -sf $f
 done
+
+
+
+mkfontscale
+mkfontdir
+
+xset fp rehash
+fc-cache
+
+xset q

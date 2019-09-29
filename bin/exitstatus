@@ -1,0 +1,18 @@
+#!/bin/sh
+
+
+# Display the exit status of the previous command, if non-zero.
+
+if [ "$1" != "" ]; then
+    exitstatus=$1
+fi
+
+. ~/bin/ansicolor
+exitstatus=$?
+color=${FG_GREEN}
+
+if [ $exitstatus -ne 0 ]; then
+    color=${FG_RED}
+fi
+echo -n "${color} $exitstatus ${CO_RESET}"
+

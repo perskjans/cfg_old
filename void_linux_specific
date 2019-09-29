@@ -35,16 +35,15 @@ pu()
 
 pq()
 {
-    xbps-query -l $*
+    xbps-query $*
 }
 
 pqr()
 {
-    sudo xbps-query -Rl $*
+    sudo xbps-query -Rsl $*
 }
 
-prd()
-{
+prd() {
     sudo xbps-remove -Oo $*
 }
 
