@@ -14,6 +14,12 @@
     export EDITOR=vim
 
     export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # colored GCC warnings and errors
+    export QT_STYLE_OVERRIDE=gtk
+    export QT_SELECT=qt5
+
+    if [[ $LANG = '' ]]; then
+        export LANG=en_US.UTF-8
+    fi
 
 ### END: general
 
