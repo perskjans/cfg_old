@@ -482,7 +482,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
 
 
     " search and replace
-    nnoremap <leader>rr :%s:::cg<Left><Left><Left><Left>
+    nnoremap <leader>r :%s:::cg<Left><Left><Left><Left>
 
     " Toggle search highlight
     nnoremap <leader>h :set hlsearch! hlsearch?<CR>
