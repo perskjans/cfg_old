@@ -12,14 +12,14 @@ fi
 x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
-panel_width=3840
-panel_height=36
+#panel_width=3840
+panel_height=40
 
 $HC pad $monitor $panel_height
 
 fonsize=20
-#font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
-font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
+font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
+#font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
 font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
 bgcolor=$($HC get frame_border_normal_color)
@@ -222,6 +222,7 @@ fi
         right="$SEP $vol $SEP $bat $SEP $date $SEP $TRAY"
         right_unformatted="$SEPCHAR $vol $SEPCHAR $bat $SEPCHAR $date $SEPCHAR A"
 
+        right_unformatted=$(echo -n "$right" | sed "s.\^[^(]*([^)]*)..g")
         #right_text_only=$(echo -n "$right" | sed "s.\^[^(]*([^)]*)..g")
         #right_text_only=$(echo -n "$right" | sed "s/\s\+$//g")
 
@@ -230,7 +231,7 @@ fi
         right=$(echo -n "$right" | sed "s.$SEPCHAR.$SEP.g")
 
         PADDING=$(($panel_width - $width * 2 + 20))
-        PADDING=1300
+        #PADDING=1300
         echo -n "^pa($PADDING)$right"
         echo
 
