@@ -32,7 +32,7 @@ selfg='#101010'
 # Try to find textwidth binary.
 # In e.g. Ubuntu, this is named dzen2-textwidth.
 if which textwidth &> /dev/null ; then
-    textwidth="textwidth";
+    textwidth="textwidth"
 elif which dzen2-textwidth &> /dev/null ; then
     textwidth="dzen2-textwidth";
 else
@@ -242,4 +242,4 @@ fi
     # gets piped to dzen2.
 
 #}
-} 2>/dev/null | dzen2 -x $x -y $y -w $panel_width -h $panel_height -fn "$font" -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' -ta l -bg "$bgcolor" -fg "$fgcolor" &
+} 2>/dev/null | dzen2 -x $x -y $y -w $panel_width -h $panel_height -fn "$font" -ta l -bg "$bgcolor" -fg "$fgcolor" -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' &

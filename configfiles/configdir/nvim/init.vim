@@ -23,10 +23,10 @@ nnoremap <silent> <leader>0 :so $MYVIMRC<cr>
 set backup
 set noswapfile
 
-set dir=/tmp
-set undodir=/tmp/undo
-set backupdir=/tmp/backup
-set viewdir=/tmp/view
+set dir=~/.cache/vimtmp
+set undodir=~/.cache/tmp/undo
+set backupdir=~/.cache/vimtmp/backup
+set viewdir=~/.cache/vimtmp/view
 
 " Make Vim able to edit crontab files again.
 set backupskip=/tmp/*,/private/tmp/*"

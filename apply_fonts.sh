@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ###
-### This script will link font files generate font settings
+### This script will link font files and generate font settings
 ###
 
 mkdir -p ~/.local/share/fonts
