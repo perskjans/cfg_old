@@ -1,5 +1,5 @@
-. ~/bin/ansicolor
-. ~/bin/gitstatus
+. ~/cfg/lib/ansicolor
+. ~/cfg/lib/gitstatus
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in

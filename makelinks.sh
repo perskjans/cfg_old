@@ -7,6 +7,8 @@ if [[ $CURRENT_DIR == $HOME ]]; then
     exit 1
 fi
 
+mkdir ~/.cache
+
 
 # Dirs
 if [ ! -d ~/cfg ]; then

@@ -2,10 +2,7 @@
 
 # this is a simple config for herbstluftwm
 
-hc()
-{
-    herbstclient "$@"
-}
+hc() { herbstclient "$@"; }
 
 hc emit_hook reload
 
@@ -16,8 +13,8 @@ hc emit_hook reload
 hc keyunbind --all
 
 # if you have a super key you will be much happier with Mod set to Mod4
-Mod=Mod1    # Use alt as the main modifier
-#Mod=Mod4   # Use the super key as the main modifier
+#Mod=Mod1    # Use alt as the main modifier
+Mod=Mod4   # Use the super key as the main modifier
 
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
@@ -30,7 +27,7 @@ BROWSER=chromium
 MYTERM=st
 #MYTERM=termite
 
-if [[ ! $(which $MYTERM) ]]; then
+if [ ! $(which $MYTERM) ]; then
     MYTERM=xfce4-terminal
 fi
 

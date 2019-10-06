@@ -51,16 +51,16 @@
 
     case $manager in
     apt)
-        os_specific_file=~/cfg/debian_linux_specific
+        os_specific_file=~/cfg/lib/debian_linux_specific
     ;;
     dnf|yum)
-        os_specific_file=~/cfg/redhat_linux_specific
+        os_specific_file=~/cfg/lib/redhat_linux_specific
     ;;
     pacman)
-        os_specific_file=~/cfg/arch_linux_specific
+        os_specific_file=~/cfg/lib/arch_linux_specific
     ;;
     xbps-install)
-        os_specific_file=~/cfg/void_linux_specific
+        os_specific_file=~/cfg/lib/void_linux_specific
     ;;
     esac
 
@@ -70,7 +70,7 @@
 
 ### START: aliases
 
-    [ -f ~/cfg/aliases ] &&. ~/cfg/aliases
+    [ -f ~/cfg/lib/aliases ] &&. ~/cfg/lib/aliases
 
 ### START: aliases
 
@@ -93,6 +93,6 @@
 
 ### START: Prompt setup
 
-    . ~/bin/setprompt
+    . ~/cfg/lib/setprompt
 
 ### END: Prompt setup

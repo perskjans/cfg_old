@@ -37,5 +37,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-[ -f ~/cfg/aliases ] &&. ~/cfg/aliases
-[ -f ~/bin/setprompt ] && . ~/bin/setprompt
+[ -f ~/cfg/lib/aliases ] &&. ~/cfg/lib/aliases
+[ -f ~/cfg/lib/setprompt ] && . ~/cfg/lib/setprompt

@@ -1,6 +1,8 @@
+
 which nvim >/dev/null 2>&1
 if [ "$?" == "0" ]; then
     alias vim='nvim'
+    export EDITOR=nvim
 fi
 
 # enable color support of ls and also add handy aliases
@@ -49,7 +51,8 @@ alias glg1="git log --graph --abbrev-commit --decorate --date=relative --format=
 alias glg2="git log --reverse --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s - %an%C(bold yellow)%d%C(reset)' --all"
 alias glg3="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''%s - %an' --all"
 alias glg4="git log --reverse --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''%s - %an' --all"
-alias gcl='~/bin/gitclone'
-alias gfa='~/bin/gitfindall'
-alias gpa='~/bin/gitpullall'
+
+alias gcl='~/bin/gitutils clone'
+alias gfa='~/bin/gitutils findall'
+alias gpa='~/bin/gitutils pullall'
 

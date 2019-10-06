@@ -7,7 +7,7 @@ if [ "$1" != "" ]; then
     exitstatus=$1
 fi
 
-. ~/bin/ansicolor
+. ~/cfg/lib/ansicolor
 exitstatus=$?
 color=${FG_GREEN}
 

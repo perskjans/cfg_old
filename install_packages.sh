@@ -1,5 +1,22 @@
 #!/bin/sh
 
+case $DISTRO_TYPE in
+debian)
+    os_specific_file=~/cfg/lib/debian_linux_specific
+;;
+redhat)
+    os_specific_file=~/cfg/lib/redhat_linux_specific
+;;
+arch)
+    os_specific_file=~/cfg/lib/arch_linux_specific
+;;
+void)
+    os_specific_file=~/cfg/lib/void_linux_specific
+;;
+esac
+
+[ -f $os_specific_file ] && . $os_specific_file
+
 packages_to_install()
 {
 
@@ -26,8 +43,9 @@ packages_to_install()
     echo unzip
     echo vifm
     echo wget
+    echo xclip
     echo xf86-video-vesa
-    echo xorg-fonts-encoding
+    echo xorg-fonts-encodings
     echo xorg-font-utils
     echo xorg-server
     echo xorg-twm

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-. ~/bin/git.conf
-
-reposfile_tmp=$reposfile\_tmp
-
-find $(pwd) -name ".git" -type d | sed "s/\/\.git//g" | sort | uniq >> $reposfile_tmp
-cat $reposfile_tmp | sort | uniq > $reposfile
-rm $reposfile_tmp
