@@ -16,7 +16,13 @@ promptcmd()
     fi
     gitstatus=$(GitStatus)
 
-    export PS1="\n#${FG_BLUE}[ ${exitcolor}${exitstatus}${CO_RESET} ${FG_BLUE}][${CO_RESET}\$(date +%H:%M)${FG_BLUE}]${CO_RESET} ${FG_GREEN}\u${CO_RESET}@${FG_GREEN}\h${CO_RESET}: ${FG_YELLOW}\w${CO_RESET} \${gitstatus}\n#\$ "
+    userco=$FG_GREEN
+
+    if [ "$UID" == "0" ]; then
+        userco=$FG_RED
+    fi
+
+    export PS1="\n#${FG_BLUE}[${exitcolor}${exitstatus}${CO_RESET}${FG_BLUE}][${CO_RESET}\$(date +%H:%M)${FG_BLUE}]${CO_RESET} ${userco}\u${CO_RESET}@${userco}\h${CO_RESET}: ${FG_YELLOW}\w${CO_RESET} \${gitstatus}\n#\$ "
 }
 export PROMPT_COMMAND=promptcmd
 
