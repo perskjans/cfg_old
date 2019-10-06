@@ -17,7 +17,7 @@ panel_height=40
 
 $HC pad $monitor $panel_height
 
-fonsize=20
+fonsize=12
 font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
 #font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
 font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
@@ -189,10 +189,8 @@ fi
 
 
         #### small adjustments ####
-        icon_path="/usr/share/icons/stlarch_icons"
 
         ## Volume
-        #volico="^i($icon_path/vol1.xbm)"
         volico="VOL"
         vol=$(amixer -c 0 get Master | grep -o "[0-9]*%" | head -1)
         vol="$volico $vol"
@@ -206,10 +204,8 @@ fi
                 batstat=$(cat $f)-$batstat
             done
             if [[ $batstat == *"ischarging"* ]]; then
-                #batico="^i($icon_path/ac10.xbm)"
                 batico="BAT"
             else
-                #batico="^i($icon_path/batt5full.xbm)"
                 batico="PWR"
             fi
             bat=$(cat /sys/class/power_supply/BAT0/capacity)
@@ -218,20 +214,14 @@ fi
 
         TRAY="^ca(1,\"$HOME/bin/toggletray\") A^ca()"
 
-        SEPCHAR='|'
         right="$SEP $vol $SEP $bat $SEP $date $SEP $TRAY"
-        right_unformatted="$SEPCHAR $vol $SEPCHAR $bat $SEPCHAR $date $SEPCHAR A"
 
-        right_unformatted=$(echo -n "$right" | sed "s.\^[^(]*([^)]*)..g")
-        #right_text_only=$(echo -n "$right" | sed "s.\^[^(]*([^)]*)..g")
-        #right_text_only=$(echo -n "$right" | sed "s/\s\+$//g")
+        right_unformatted=$(echo -n "$right" | sed "s;\^[^(]*([^)]*);;g")
 
         # get width of right aligned text.. and add some space..
         width=$($textwidth "${font}" "$right_unformatted")
-        right=$(echo -n "$right" | sed "s.$SEPCHAR.$SEP.g")
 
-        PADDING=$(($panel_width - $width * 2 + 20))
-        #PADDING=1300
+        PADDING=$(( $panel_width - (($width / 2) * 3)))
         echo -n "^pa($PADDING)$right"
         echo
 
