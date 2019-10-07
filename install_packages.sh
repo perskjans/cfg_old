@@ -52,6 +52,7 @@ packages_to_install()
     echo xorg-xclock
     echo xorg-xinit
     echo xorg-xrandr
+    echo xset
     echo xterm
 
     case $DISTRO_TYPE in

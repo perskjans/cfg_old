@@ -7,52 +7,11 @@
 export DISTRO_TYPE=void
 
 ## Set up functions for package manager
-
-pm()
-{
-    sudo xbps-install $*
-}
-
-pi()
-{
-    sudo xbps-install -S $*
-}
-
-pr()
-{
-    sudo xbps-remove -R $*
-}
-
-pc()
-{
-    sudo xbps-remove -Oo $*
-}
-
-pu()
-{
-    sudo xbps-install -Su $*
-}
-
-pq()
-{
-    xbps-query $*
-}
-
-pqr()
-{
-    sudo xbps-query -Rsl $*
-}
-
-prd() {
-    sudo xbps-remove -Oo $*
-}
-
-export -f pm
-export -f pi
-export -f pr
-export -f pc
-export -f pu
-export -f pq
-export -f pqr
-export -f prd
-
+pm() { sudo xbps-install $*; }
+pi() { sudo xbps-install -S $*; }
+pr() { sudo xbps-remove -R $*; }
+pc() { sudo xbps-remove -Oo $*; }
+pu() { sudo xbps-install -Su $*; }
+pq() { xbps-query $*; }
+pqr() { sudo xbps-query -Rsl $*; }
+prd() { sudo xbps-remove -Oo $*; }

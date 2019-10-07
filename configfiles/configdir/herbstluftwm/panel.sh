@@ -1,4 +1,4 @@
-    #!/bin/bash
+#!/bin/bash
 
 HC=herbstclient
 
@@ -13,13 +13,20 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 #panel_width=3840
-panel_height=40
+panel_height=36
 
 $HC pad $monitor $panel_height
 
-fonsize=12
-font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
-#font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
+dpi=$(xrdb -query | grep Xft.dpi | grep -o "[0-9]*")
+HIGH_DPI=1
+[[ "$dpi" == "96" ]] && HIGH_DPI=0
+
+fonsize=20
+if [ "$DISTRO_TYPE" == "void" ]; then
+    font="-*-fixed-medium-*-*-*-${fontsize}-*-*-*-*-*-*-*"
+else
+    font="-misc-dejavu sans-medium-r-normal--${fontsize}-0-0-0-p-0-iso8859-15"
+fi
 font2="-misc-font awesome 5 free solid-medium-r-normal--0-0-0-0-p-0-iso10646-1"
 
 bgcolor=$($HC get frame_border_normal_color)
@@ -221,7 +228,11 @@ fi
         # get width of right aligned text.. and add some space..
         width=$($textwidth "${font}" "$right_unformatted")
 
-        PADDING=$(( $panel_width - (($width / 2) * 3)))
+        if [[ $HIGH_DPI -eq 1 ]]; then
+            PADDING=$(( $panel_width - (($width / 2) * 3)))
+        else
+            PADDING=$(( $panel_width - (($width / 4) * 3)))
+        fi
         echo -n "^pa($PADDING)$right"
         echo
 
