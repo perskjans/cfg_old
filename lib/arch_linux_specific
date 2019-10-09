@@ -4,14 +4,16 @@
 ### Content is stuff specific for Arch based Linux distros
 ###
 
-export DISTRO_TYPE=arch
+if [ $(which pacman) ]; then
+    export DISTRO_TYPE=arch
 
-## Set up functions for package manager
-pm() { sudo pacman $*i; }
-pi() { sudo pacman -S $*; }
-pr() { sudo pacman -Rs $*; }
-pc() { sudo pacman -Scc $*; }
-pu() { sudo pacman -Syu $*; }
-pq() { sudo pacman -Q $*; }
-pqr() { sudo pacman -Ss $*; }
-prd() { sudo pacman -Qdtq | pacman -Rs - $*; }
+    ## Set up functions for package manager
+    pm() { sudo pacman $*; }
+    pi() { sudo pacman -S $*; }
+    pr() { sudo pacman -Rs $*; }
+    pc() { sudo pacman -Scc $*; }
+    pu() { sudo pacman -Syu $*; }
+    pq() { sudo pacman -Q $*; }
+    pqr() { sudo pacman -Ss $*; }
+    prd() { sudo pacman -Qdtq | pacman -Rs - $*; }
+fi

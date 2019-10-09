@@ -4,62 +4,19 @@
 ### Content is stuff specific for Redhat based Linux distros
 ###
 
-export DISTRO_TYPE=redhat
+manager=yum
+if [ $(which $manager) ]; then
+    export DISTRO_TYPE=redhat
 
-## Set up functions for package manager
-which dnf >/dev/null 2>&1
-if [ "$?" == "0" ]; then
-    manager=dnf
-else
-    manager=yum
+    ## Set up functions for package manager
+    [ $(which dnf) ]; manager=dnf
+
+    pm() { sudo $manager $*; }
+    pi() { sudo $manager install $*; }
+    pr() { sudo $manager remove $*; }
+    pc() { sudo $manager clean all $*; }
+    pu() { sudo $manager upgrade $*; }
+    pq() { rpm -qa $* }
+    pqr() { sudo $manager search $*; }
+    prd() { sudo $manager autoremove $*; }
 fi
-
-pm()
-{
-    sudo $manager $*
-}
-
-pi()
-{
-    sudo $manager install $*
-}
-
-pr()
-{
-    sudo $manager remove $*
-}
-
-pc()
-{
-    sudo $manager clean all $*
-}
-
-pu()
-{
-    sudo $manager upgrade $*
-}
-
-pq()
-{
-    rpm -qa $*
-}
-
-pqr()
-{
-    sudo $manager search $*
-}
-
-prd()
-{
-    sudo $manager autoremove $*
-}
-
-export -f pm
-export -f pi
-export -f pr
-export -f pc
-export -f pu
-export -f pq
-export -f pqr
-export -f prd
-

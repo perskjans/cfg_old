@@ -4,15 +4,16 @@
 ### Content is stuff specific for Debian based Linux distros
 ###
 
-export DISTRO_TYPE=debian
+if [ $(which apt) ]; then
+    export DISTRO_TYPE=debian
 
-## Set up functions for package manager
-pm() { sudo apt $*; }
-pi() { sudo apt install $*; }
-pr() { sudo apt remove $*; }
-pc() { sudo apt clean$*; }
-pu() { sudo apt update && sudo apt upgrade; }
-pq() { dpkg -l $*; }
-pqr() { sudo apt search $*; }
-prd() { sudo apt autoremove $*; }
-
+    ## Set up functions for package manager
+    pm() { sudo apt $*; }
+    pi() { sudo apt install $*; }
+    pr() { sudo apt remove $*; }
+    pc() { sudo apt clean$*; }
+    pu() { sudo apt update && sudo apt upgrade; }
+    pq() { dpkg -l $*; }
+    pqr() { sudo apt search $*; }
+    prd() { sudo apt autoremove $*; }
+fi

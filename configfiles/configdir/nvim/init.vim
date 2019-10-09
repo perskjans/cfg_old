@@ -961,6 +961,8 @@ augroup END
 
 " }}}
 
+"autocmd BufWritePost */herbstluftwm/* :silent! herbstclient reload<CR>
+
 " END ---------------------------------------------------------------------- }}}
 
 so $workman

@@ -4,14 +4,16 @@
 ### Content is stuff specific for Void Linux
 ###
 
-export DISTRO_TYPE=void
+if [ $(which xbps-install) ]; then
+    export DISTRO_TYPE=void
 
-## Set up functions for package manager
-pm() { sudo xbps-install $*; }
-pi() { sudo xbps-install -S $*; }
-pr() { sudo xbps-remove -R $*; }
-pc() { sudo xbps-remove -Oo $*; }
-pu() { sudo xbps-install -Su $*; }
-pq() { xbps-query $*; }
-pqr() { sudo xbps-query -Rsl $*; }
-prd() { sudo xbps-remove -Oo $*; }
+    ## Set up functions for package manager
+    pm() { sudo xbps-install $*; }
+    pi() { sudo xbps-install -S $*; }
+    pr() { sudo xbps-remove -R $*; }
+    pc() { sudo xbps-remove -Oo $*; }
+    pu() { sudo xbps-install -Su $*; }
+    pq() { xbps-query $*; }
+    pqr() { sudo xbps-query -Rsl $*; }
+    prd() { sudo xbps-remove -Oo $*; }
+fi

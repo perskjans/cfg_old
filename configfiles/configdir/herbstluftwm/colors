@@ -1,0 +1,26 @@
+### This file have color variables for herbstluftwm and panel.
+
+
+## Herbstluft variables ##
+#co_root='#5a8e3a'
+co_root='#001010'
+co_frame_bg_active_color '#450045'
+co_frame_bg_normal_color '#565656'
+co_frame_border_active_color '#222222'
+co_frame_border_normal_color '#101010'
+
+## Panel variables ##
+co_panel_fg='#afafaf'
+#co_panel_fg='#af5f00'
+co_panel_bg='#101010'
+co_panel_occupied_fg='#ffefef'
+#co_panel_occupied_fg='#af5faf'
+co_panel_monitor_focust_fg='#000000'
+co_panel_monitor_focust_bg='#af5f00'
+co_panel_monitor_unfocust_fg='#141414'
+co_panel_monitor_unfocust_bg='#9ca668'
+co_panel_urgent_fg='#000000'
+co_panel_urgent_bg='#af5f00'
+co_panel_empty_fg=$co_panel_fg
+co_panel_other_monitor_focust_fg=$co_panel_fg
+co_panel_other_monitor_unfocust_fg=$co_panel_fg

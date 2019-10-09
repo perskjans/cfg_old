@@ -7,8 +7,6 @@ if [[ $CURRENT_DIR == $HOME ]]; then
     exit 1
 fi
 
-mkdir ~/.cache
-
 
 # Dirs
 if [ ! -d ~/cfg ]; then
@@ -19,7 +17,7 @@ ln -snf $CURRENT_DIR/bin ~/bin
 CONFIGDIR=$CURRENT_DIR/configfiles/configdir
 pushd $CONFIGDIR >/dev/null
 
-for dir in /.config /tmp $(grep -o '/.*"$' user-dirs.dirs | tr '"\n' ' ')
+for dir in /.config /.cache /tmp $(grep -o '/.*"$' user-dirs.dirs | tr '"\n' ' ')
 do
     mkdir -p -m 755 $HOME$dir
 done

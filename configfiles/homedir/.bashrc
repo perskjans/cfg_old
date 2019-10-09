@@ -39,3 +39,4 @@ fi
 
 [ -f ~/cfg/lib/aliases ] &&. ~/cfg/lib/aliases
 [ -f ~/cfg/lib/setprompt ] && . ~/cfg/lib/setprompt
+. ~/cfg/lib/*_linux_specific
