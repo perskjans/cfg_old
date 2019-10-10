@@ -87,6 +87,6 @@ pi $(packages_to_install)
 
 case $DISTRO_TYPE in
 arch)
-    yay -Su lemonbar-xft-git
+    yay -S lemonbar-xft-git
 ;;
 esac
