@@ -33,7 +33,8 @@ packages_to_install()
     arch)
         echo "
         jshon
-        networknanager
+        networkmanager
+        network-manager-applet
         noto-fonts
         noto-fonts-emoji
         ttf-dejavu
