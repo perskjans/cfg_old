@@ -10,6 +10,7 @@ packages_to_install()
     automake
     bash
     bash-completion
+    diff
     dmenu
     dunst
     fossil
@@ -18,6 +19,7 @@ packages_to_install()
     libnotify
     make
     neovim
+    network-manager-applet
     patch
     pkg-config
     tmux
@@ -35,7 +37,6 @@ packages_to_install()
         echo "
         jshon
         networkmanager
-        network-manager-applet
         noto-fonts
         noto-fonts-emoji
         ttf-dejavu
