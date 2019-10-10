@@ -22,7 +22,7 @@ promptcmd()
         userco=$FG_RED
     fi
 
-    export PS1="\n#${FG_BLUE}[${exitcolor}${exitstatus}${CO_RESET}${FG_BLUE}][${CO_RESET}\$(date +%H:%M)${FG_BLUE}]${CO_RESET} ${userco}\u${CO_RESET}@${userco}\h${CO_RESET}: ${FG_YELLOW}\w${CO_RESET} \${gitstatus}\n#\$ "
+    export PS1="\n#${FG_BLUE}[${exitcolor}${exitstatus}${CO_RESET}${FG_BLUE}][${CO_RESET}\$(date +%H:%M)${FG_BLUE}]${CO_RESET}${FG_BLUE}[${userco}\u${CO_RESET}@${userco}\h${CO_RESET}: ${FG_YELLOW}\w${FG_BLUE}]${CO_RESET}\${gitstatus}\n#\$ "
 }
 export PROMPT_COMMAND=promptcmd
 
