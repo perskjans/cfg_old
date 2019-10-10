@@ -2,7 +2,6 @@
 
 source ~/.config/herbstluftwm/colors
 
-execute_click() { $1; }
 HC=herbstclient
 
 monitor=${1:-0}
@@ -11,21 +10,21 @@ if [ -z "$geometry" ] ;then
     echo "Invalid monitor $monitor"
     exit 1
 fi
+
 # geometry has the format X Y W H
 x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 panel_height=40
+fontSize=10
+fontAwesomeSize=10
 
-#$HC pad $monitor $panel_height
 $HC pad $monitor $panel_height
 
-selbg=$($HC get window_border_active_color)
-selfg='#000000'
 
-font="Monospace Medium"
-fontAwsomeFree="FontAwesome5Free:style=Solid:antialias=false:pixelsize=25;3"
-fontAwsomeBrand="FontAwesome5Brand:style=Solid:antialias=false:pixelsize=25;3"
+font="Monospace Medium-${fontSize}:antialias=true"
+fontAwesomeFree="FontAwesome5Free-${fontAwesomeSize}:style=Solid:antialias=false;1"
+fontAwesomeBrand="FontAwesome5Brand-${fontAwesomeSize}:style=Solid:antialias=false;1"
 
 if awk -Wv 2>/dev/null | head -1 | grep -q '^mawk'; then
     # mawk needs "-W interactive" to line-buffer stdout correctly
@@ -206,4 +205,4 @@ fi
     # gets piped to dzen2.
 
 #}
-}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -o 0 -f ${font} -o -2 -f ${fontAwsomeFree} -o -2 -f ${fontAwsomeBrand} -p -a 20 | sh
+}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -o 0 -f ${font} -o -2 -f ${fontAwesomeFree} -o -2 -f ${fontAwesomeBrand} -p -a 20 | sh

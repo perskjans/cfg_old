@@ -11,6 +11,7 @@ packages_to_install()
     bash
     bash-completion
     dmenu
+    dunst
     fossil
     gcc
     herbstluftwm
@@ -34,7 +35,8 @@ packages_to_install()
     xorg-xclock
     xorg-xinit
     xorg-xrandr
-    xset
+    xorg-xset
+    xorg-xsetroot
     xterm
     "
 
