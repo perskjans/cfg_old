@@ -15,44 +15,61 @@ packages_to_install()
     fossil
     gcc
     herbstluftwm
-    jshon
     make
-    mesa
     neovim
     patch
     pkg-config
     tmux
-    unrar
     unzip
     vifm
     wget
     xclip
     xf86-video-vesa
-    xorg-fonts-encodings
-    xorg-font-utils
     xorg-server
-    xorg-twm
-    xorg-xclock
-    xorg-xinit
-    xorg-xrandr
-    xorg-xset
-    xorg-xsetroot
     xterm
+    NetworkManager
     "
 
     case $DISTRO_TYPE in
     arch)
-
-        echo noto-fonts
-        echo noto-fonts-emoji
-        echo ttf-dejavu
-        echo ttf-inconsolata
-        echo ttf-liberation
-        echo ttf-linux-libertine
-
+        echo "
+        jshon
+        noto-fonts
+        noto-fonts-emoji
+        ttf-dejavu
+        ttf-inconsolata
+        ttf-liberation
+        ttf-linux-libertine
+        xorg-fonts-encodings
+        xorg-font-utils
+        xorg-xset
+        xorg-xsetroot
+        xorg-xrandr
+        xorg-twm
+        xorg-xclock
+        xorg-xinit
+        "
     ;;
-    esac
-}
+    void)
+        echo "
+        dejavu-fonts-ttf
+        font-inconsolata-otf
+        font-libertine-ttf
+        fontconfig
+        fonts-droid-ttf
+        fonts-roboto-ttf
+        lemonbar-xft
+        liberation-fonts-ttf
+        noto-fonts-emoji
+        noto-fonts-ttf
+        noto-fonts-ttf-extra
+        xorg-fonts
+        xorg-apps
+        xorg-minimal
+        xorg-server-devel
+        "
+    ;;
+    esac }
 
 #xorg-server-utils
 #multilib-devel
