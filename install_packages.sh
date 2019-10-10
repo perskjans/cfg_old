@@ -10,7 +10,7 @@ packages_to_install()
     automake
     bash
     bash-completion
-    diff
+    diffutils
     dmenu
     dunst
     fossil
