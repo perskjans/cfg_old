@@ -27,13 +27,13 @@ packages_to_install()
     xf86-video-vesa
     xorg-server
     xterm
-    NetworkManager
     "
 
     case $DISTRO_TYPE in
     arch)
         echo "
         jshon
+        networknanager
         noto-fonts
         noto-fonts-emoji
         ttf-dejavu
@@ -60,6 +60,7 @@ packages_to_install()
         fonts-roboto-ttf
         lemonbar-xft
         liberation-fonts-ttf
+        NetworkManager
         noto-fonts-emoji
         noto-fonts-ttf
         noto-fonts-ttf-extra
