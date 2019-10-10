@@ -4,7 +4,8 @@
 ### Content is stuff specific for Void Linux
 ###
 
-if [ $(which xbps-install) ]; then
+which xbps-install >/dev/null 2>&1
+if [ $? -eq 0 ]; then
     export DISTRO_TYPE=void
 
     ## Set up functions for package manager

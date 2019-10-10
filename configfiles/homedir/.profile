@@ -39,7 +39,7 @@
 
 ### START: Load OS specific file
 
-    . ~/cfg/lib/*_linux_specific
+    for f in ~/cfg/lib/*_linux_specific; do . $f; done
 
 ### END: Load OS specific file
 

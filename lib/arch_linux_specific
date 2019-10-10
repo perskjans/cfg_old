@@ -4,7 +4,8 @@
 ### Content is stuff specific for Arch based Linux distros
 ###
 
-if [ $(which pacman) ]; then
+which pacman >/dev/null 2>&1
+if [ $? -eq 0 ]; then
     export DISTRO_TYPE=arch
 
     ## Set up functions for package manager
@@ -13,7 +14,7 @@ if [ $(which pacman) ]; then
     pr() { sudo pacman -Rs $*; }
     pc() { sudo pacman -Scc $*; }
     pu() { sudo pacman -Syu $*; }
-    pq() { sudo pacman -Q $*; }
+    pq() { pacman -Q $*; }
     pqr() { sudo pacman -Ss $*; }
-    prd() { sudo pacman -Qdtq | pacman -Rs - $*; }
+    prd() { pacman -Qdtq | sudo pacman -Rs - $*; }
 fi

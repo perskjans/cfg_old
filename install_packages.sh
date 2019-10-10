@@ -1,59 +1,42 @@
 #!/bin/sh
 
-case $DISTRO_TYPE in
-debian)
-    os_specific_file=~/cfg/lib/debian_linux_specific
-;;
-redhat)
-    os_specific_file=~/cfg/lib/redhat_linux_specific
-;;
-arch)
-    os_specific_file=~/cfg/lib/arch_linux_specific
-;;
-void)
-    os_specific_file=~/cfg/lib/void_linux_specific
-;;
-esac
-
-[ -f $os_specific_file ] && . $os_specific_file
-
 packages_to_install()
 {
 
-    echo alsa-utils
-    echo arandr
-    echo autoconf
-    echo automake
-    echo bash
-    echo bash-completion
-    echo dmenu
-    echo dzen2
-    echo fakeroot
-    echo fossil
-    echo gcc
-    echo herbstluftwm
-    echo jshon
-    echo make
-    echo mesa
-    echo neovim
-    echo patch
-    echo pkg-config
-    echo tmux
-    echo unrar
-    echo unzip
-    echo vifm
-    echo wget
-    echo xclip
-    echo xf86-video-vesa
-    echo xorg-fonts-encodings
-    echo xorg-font-utils
-    echo xorg-server
-    echo xorg-twm
-    echo xorg-xclock
-    echo xorg-xinit
-    echo xorg-xrandr
-    echo xset
-    echo xterm
+    echo "
+    alsa-utils
+    arandr
+    autoconf
+    automake
+    bash
+    bash-completion
+    dmenu
+    fossil
+    gcc
+    herbstluftwm
+    jshon
+    make
+    mesa
+    neovim
+    patch
+    pkg-config
+    tmux
+    unrar
+    unzip
+    vifm
+    wget
+    xclip
+    xf86-video-vesa
+    xorg-fonts-encodings
+    xorg-font-utils
+    xorg-server
+    xorg-twm
+    xorg-xclock
+    xorg-xinit
+    xorg-xrandr
+    xset
+    xterm
+    "
 
     case $DISTRO_TYPE in
     arch)
@@ -74,5 +57,6 @@ packages_to_install()
 #linux-headers catalyst-dkms catalyst-utils lib32-catalyst-utils
 #nvidia lib32-nvidia-utils
 
+for f in ~/cfg/lib/*_linux_specific; do . $f; done
 
 pi $(packages_to_install)

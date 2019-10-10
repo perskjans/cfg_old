@@ -4,19 +4,20 @@
 ### Content is stuff specific for Redhat based Linux distros
 ###
 
-manager=yum
-if [ $(which $manager) ]; then
+if [ -f /etc/redhat-release ]; then
     export DISTRO_TYPE=redhat
 
     ## Set up functions for package manager
-    [ $(which dnf) ]; manager=dnf
+    manager=yum
+    which dnf >/dev/null 2>&1
+    [ $? -eq 0 ] && manager=dnf
 
     pm() { sudo $manager $*; }
     pi() { sudo $manager install $*; }
     pr() { sudo $manager remove $*; }
     pc() { sudo $manager clean all $*; }
     pu() { sudo $manager upgrade $*; }
-    pq() { rpm -qa $* }
+    pq() { rpm -qa $*; }
     pqr() { sudo $manager search $*; }
     prd() { sudo $manager autoremove $*; }
 fi

@@ -4,7 +4,8 @@
 ### Content is stuff specific for Debian based Linux distros
 ###
 
-if [ $(which apt) ]; then
+which apt >/dev/null 2>&1
+if [ $? -eq 0 ]; then
     export DISTRO_TYPE=debian
 
     ## Set up functions for package manager
