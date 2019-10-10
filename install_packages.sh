@@ -15,6 +15,7 @@ packages_to_install()
     fossil
     gcc
     herbstluftwm
+    libnotify
     make
     neovim
     patch
