@@ -12,7 +12,7 @@ if [ $? -eq 0 ]; then
     pm() { sudo apt $*; }
     pi() { sudo apt install $*; }
     pr() { sudo apt remove $*; }
-    pc() { sudo apt clean$*; }
+    pc() { sudo apt clean $*; }
     pu() { sudo apt update && sudo apt upgrade; }
     pq() { dpkg -l $*; }
     pqr() { sudo apt search $*; }
