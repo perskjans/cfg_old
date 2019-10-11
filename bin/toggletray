@@ -1,8 +1,9 @@
 #!/bin/sh
 
-pid=$(pgrep stalonetray)
+pid=$(pgrep trayer)
 if [ "$pid" != ""  ]; then
     kill $pid
 else
-    stalonetray &
+    trayer --tint 0xFF111111 --transparent true --monitor ${1:-0} \
+        --edge top --align center --height 60 --widthtype request &
 fi

@@ -21,13 +21,14 @@ packages_to_install()
     neovim
     network-manager-applet
     patch
+    pavucontrol
     pkg-config
     tmux
+    trayer
     unzip
     vifm
     wget
     xclip
-    xf86-video-vesa
     xorg-server
     xterm
     "

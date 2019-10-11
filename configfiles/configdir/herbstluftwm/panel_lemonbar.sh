@@ -16,23 +16,23 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 
-if [[ -f ~/.Xdpi ]]; then
-    panel_height=40
-    fontSize=10
-    fontAwesomeSize=10
-else
+if [[ "$(xrdb -query | grep "Xft.dpi" | cut -d' ' -f2)" == "96" ]]; then
     panel_height=25
-    fontSize=14
+#    fontSize=14
     fontAwesomeSize=8
+else
+    panel_height=40
+#    fontSize=10
+    fontAwesomeSize=13
 fi
+
+#font="Monospace-${fontSize}:antialias=true"
+#font="dejavu-${fontSize}:antialias=true"
+fontAwesomeFree="FontAwesome5Free-${fontAwesomeSize}:style=Solid:antialias=true;1"
+fontAwesomeBrand="FontAwesome5Brand-${fontAwesomeSize}:style=Solid:antialias=true;1"
 
 $HC pad $monitor $panel_height
 
-
-#font="Monospace-${fontSize}:antialias=true"
-font="dejavu-${fontSize}:antialias=true"
-fontAwesomeFree="FontAwesome5Free-${fontAwesomeSize}:style=Solid:antialias=false;1"
-fontAwesomeBrand="FontAwesome5Brand-${fontAwesomeSize}:style=Solid:antialias=false;1"
 
 if awk -Wv 2>/dev/null | head -1 | grep -q '^mawk'; then
     # mawk needs "-W interactive" to line-buffer stdout correctly
@@ -60,7 +60,7 @@ fi
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.
-        date +$'date\t%m/%d %H:%M:%S'
+        date +$'date\t%V, %a, %d %b %Y %H:%M:%S'
         sleep 1 || break
     done > >( uniq_linebuffered ) &
     childpid=$!
@@ -174,7 +174,7 @@ fi
         ## Volume
         volico='\uf028' #  \uf026
         vol=$(amixer -c 0 get Master | grep -o "[0-9]*%" | head -1)
-        VOLUME="$SEP $volico$vol"
+        VOLUME="$volico $vol"
 
         ## Battery
         powerdir=/sys/class/power_supply/
@@ -187,24 +187,23 @@ fi
             pwr=$(cat /sys/class/power_supply/BAT0/capacity)
             if [[ $batstat == *"ischarging"* ]]; then
                 #   \uf240    \uf241   \uf242    \uf243    \uf244
-                [[ $pwr -lt 5 ]] && pwrico='%{F#ff0000}\uf244%{F-}'
-                [[ $pwr -ge 5 ]] && pwrico='\uf243'
-                [[ $pwr -gt 40 ]] && pwrico='\uf242'
-                [[ $pwr -gt 70 ]] && pwrico='\uf241'
+                [[ $pwr -lt 15 ]] && pwrico='%{F#ff0000}\uf244%{F-}'
+                [[ $pwr -ge 15 ]] && pwrico='\uf243'
+                [[ $pwr -gt 50 ]] && pwrico='\uf242'
+                [[ $pwr -gt 75 ]] && pwrico='\uf241'
                 [[ $pwr -gt 95 ]] && pwrico='\uf240'
             else
                 #  \uf0e7
                 pwrico='\uf0e7'
             fi
-            PWR="$SEP $pwrico$pwr%"
+            PWR="$SEP $pwrico $pwr%"
         fi
 
-        TOGGLETRAY="$SEP %{A:toggletray:}\uf26c%{A}" #    == \uf26c
 
-        RIGHT="$VOLUME $PWR $DATE_TIME $TOGGLETRAY"
+        RIGHT="$SEP $VOLUME $PWR $DATE_TIME $SEP"
 
 
-        echo -en "%{l}$TAGS%{c}$WIN_TITLE%{r}$RIGHT $SEP"
+        echo -en "%{l}$TAGS%{c}$WIN_TITLE%{r}$RIGHT"
 
     done
 
@@ -213,4 +212,4 @@ fi
     # gets piped to dzen2.
 
 #}
-}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -o 0 -f ${font} -o -2 -f ${fontAwesomeFree} -o -2 -f ${fontAwesomeBrand} -p -a 20 | sh
+}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -f ${fontAwesomeFree}  -f ${fontAwesomeBrand} -p -a 20 | sh
