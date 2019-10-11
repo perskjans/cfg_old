@@ -51,6 +51,7 @@ packages_to_install()
         xorg-twm
         xorg-xclock
         xorg-xinit
+        yay
         "
     ;;
     void)
@@ -83,3 +84,9 @@ packages_to_install()
 for f in ~/cfg/lib/*_linux_specific; do . $f; done
 
 pi $(packages_to_install)
+
+case $DISTRO_TYPE in
+arch)
+    yay -Su lemonbar-xft-git
+;;
+esac
