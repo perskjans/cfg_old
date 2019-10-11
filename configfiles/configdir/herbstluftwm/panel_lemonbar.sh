@@ -16,21 +16,21 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 
-dpi=$(xrdb -query | grep Xft.dpi | grep -o "[0-9]*")
-if [[ "$dpi" == "96" ]]; then
-    panel_height=20
-    fontSize=9
-    fontAwesomeSize=9
-else
+if [[ -f ~/.Xdpi ]]; then
     panel_height=40
     fontSize=10
     fontAwesomeSize=10
+else
+    panel_height=25
+    fontSize=14
+    fontAwesomeSize=8
 fi
 
 $HC pad $monitor $panel_height
 
 
-font="Monospace-${fontSize}:antialias=true"
+#font="Monospace-${fontSize}:antialias=true"
+font="dejavu-${fontSize}:antialias=true"
 fontAwesomeFree="FontAwesome5Free-${fontAwesomeSize}:style=Solid:antialias=false;1"
 fontAwesomeBrand="FontAwesome5Brand-${fontAwesomeSize}:style=Solid:antialias=false;1"
 

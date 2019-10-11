@@ -2,7 +2,6 @@
 
 # this is a simple config for herbstluftwm
 source ~/.config/herbstluftwm/colors
-xresources
 
 hc() { herbstclient "$@"; }
 
