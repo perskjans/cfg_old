@@ -26,7 +26,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-xresources() { xrdb -merge ~/.Xresources; [ -f ~/.Xdpi ] && xrdb -merge ~/.Xdpi; }
+alias xresources='. ~/.xinitrc'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
