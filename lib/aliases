@@ -22,9 +22,9 @@ alias tx='~/bin/runtmux'
 
 alias psa='ps aux | grep'
 alias jb='jobs'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll='ls -alhF'
+alias la='ls -Ah'
+alias l='ls -hCF'
 
 alias xresources='. ~/.xinitrc'
 
