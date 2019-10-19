@@ -20,17 +20,15 @@ panel_width=${geometry[2]}
 if [[ "${geometry[3]}" == "1080" ]]; then
     panel_height=20
     fontSize=13
-    fontAwesomeSize=13
 else
     panel_height=40
-    fontSize=17
-    fontAwesomeSize=14
+    fontSize=13
 fi
 
 #font="Monospace-${fontSize}:antialias=true"
 font="dejavu-${fontSize}:antialias=true"
-fontAwesomeFree="FontAwesome5Free-${fontAwesomeSize}:style=Solid:antialias=true;1"
-fontAwesomeBrand="FontAwesome5Brand-${fontAwesomeSize}:style=Solid:antialias=true;1"
+fontAwesomeFree="FontAwesome5Free-${fontSize}:style=Solid:antialias=true;1"
+fontAwesomeBrand="FontAwesome5Brand-${fontSize}:style=Solid:antialias=true;1"
 
 $HC pad $monitor $panel_height
 
@@ -138,7 +136,11 @@ fi
         # draw tags
         unset TAGS
         TAGS=' '
+        idx=0
         for i in "${tags[@]}" ; do
+            if [[ $idx -gt 9 ]]; then
+                continue
+            fi
             unset TAG
             case ${i:0:1} in
                 '#') # the tag is viewed on the specified MONITOR and it is focused.
@@ -166,6 +168,7 @@ fi
             TAG="%{A:herbstclient focus_monitor $monitor && herbstclient use ${i:1}:}${i:1}%{A}"
             #TAG="${i:1}"
             TAGS="$TAGS$TAGCOLOR$TAG%{F-}%{B-} "
+            idx=$(( $idx + 1 ))
         done
         TAGS="$SEP$TAGS$SEP"
 
@@ -208,11 +211,4 @@ fi
         echo -en "%{l}$TAGS%{c}$WIN_TITLE%{r}$RIGHT"
 
     done
-
-    ### dzen2 ###
-    # After the data is gathered and processed, the output of the previous block
-    # gets piped to dzen2.
-
-#}
-}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -f ${fontAwesomeFree}  -f ${fontAwesomeBrand} -p -a 20 | sh
-#}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -f ${font} -p -a 20 | sh
+}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -f ${font} -f ${fontAwesomeFree}  -f ${fontAwesomeBrand} -p -a 20 | sh
