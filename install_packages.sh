@@ -7,23 +7,23 @@ packages_to_install()
         echo jshon
         echo lxappearance
         echo lxappearance-obconf
-        echo networkmanager
         echo network-manager-applet
+        echo networkmanager
         echo noto-fonts
         echo noto-fonts-emoji
+        echo trayer
         echo ttf-dejavu
         echo ttf-inconsolata
         echo ttf-liberation
         echo ttf-linux-libertine
-        echo trayer
-        echo xorg-fonts-encodings
         echo xorg-font-utils
-        echo xorg-xset
-        echo xorg-xsetroot
-        echo xorg-xrandr
+        echo xorg-fonts-encodings
         echo xorg-twm
         echo xorg-xclock
         echo xorg-xinit
+        echo xorg-xrandr
+        echo xorg-xset
+        echo xorg-xsetroot
     ;;
     void)
         echo NetworkManager
@@ -33,6 +33,8 @@ packages_to_install()
         echo fontconfig
         echo fonts-droid-ttf
         echo fonts-roboto-ttf
+        echo libX11-devel
+        echo libXft-devel
         echo liberation-fonts-ttf
         echo lightdm
         echo lightdm-gtk3-greeter
@@ -68,6 +70,7 @@ packages_to_install()
     echo tmux
     echo unzip
     echo vifm
+    echo vim
     echo wget
     echo xclip
     echo xterm
