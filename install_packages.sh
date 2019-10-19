@@ -2,80 +2,76 @@
 
 packages_to_install()
 {
-
-    echo "
-    alsa-utils
-    arandr
-    autoconf
-    automake
-    bash
-    bash-completion
-    diffutils
-    dmenu
-    dunst
-    fossil
-    gcc
-    herbstluftwm
-    libnotify
-    make
-    neovim
-    network-manager-applet
-    patch
-    pavucontrol
-    pkg-config
-    tmux
-    trayer
-    unzip
-    vifm
-    wget
-    xclip
-    xorg-server
-    xterm
-    "
-
     case $DISTRO_TYPE in
     arch)
-        echo "
-        jshon
-        networkmanager
-        noto-fonts
-        noto-fonts-emoji
-        ttf-dejavu
-        ttf-inconsolata
-        ttf-liberation
-        ttf-linux-libertine
-        xorg-fonts-encodings
-        xorg-font-utils
-        xorg-xset
-        xorg-xsetroot
-        xorg-xrandr
-        xorg-twm
-        xorg-xclock
-        xorg-xinit
-        yay
-        "
+        echo jshon
+        echo lxappearance
+        echo lxappearance-obconf
+        echo networkmanager
+        echo network-manager-applet
+        echo noto-fonts
+        echo noto-fonts-emoji
+        echo ttf-dejavu
+        echo ttf-inconsolata
+        echo ttf-liberation
+        echo ttf-linux-libertine
+        echo trayer
+        echo xorg-fonts-encodings
+        echo xorg-font-utils
+        echo xorg-xset
+        echo xorg-xsetroot
+        echo xorg-xrandr
+        echo xorg-twm
+        echo xorg-xclock
+        echo xorg-xinit
     ;;
     void)
-        echo "
-        dejavu-fonts-ttf
-        font-inconsolata-otf
-        font-libertine-ttf
-        fontconfig
-        fonts-droid-ttf
-        fonts-roboto-ttf
-        lemonbar-xft
-        liberation-fonts-ttf
-        NetworkManager
-        noto-fonts-emoji
-        noto-fonts-ttf
-        noto-fonts-ttf-extra
-        xorg-fonts
-        xorg-apps
-        xorg-minimal
-        xorg-server-devel
-        "
+        echo NetworkManager
+        echo dejavu-fonts-ttf
+        echo font-inconsolata-otf
+        echo font-libertine-ttf
+        echo fontconfig
+        echo fonts-droid-ttf
+        echo fonts-roboto-ttf
+        echo liberation-fonts-ttf
+        echo lightdm
+        echo lightdm-gtk3-greeter
+        echo lxappearance
+        echo lxappearance-obconf
+        echo menumaker
+        echo noto-fonts-emoji
+        echo noto-fonts-ttf
+        echo noto-fonts-ttf-extra
+        echo openbox
+        echo trayer-srg
+        echo xorg
     ;;
-    esac }
+    esac
+
+    echo alsa-utils
+    echo arandr
+    echo automake
+    echo bash
+    echo bash-completion
+    echo diffutils
+    echo dmenu
+    echo dunst
+    echo fossil
+    echo gcc
+    echo herbstluftwm
+    echo libnotify
+    echo make
+    echo neovim
+    echo patch
+    echo pavucontrol
+    echo pkg-config
+    echo tmux
+    echo unzip
+    echo vifm
+    echo wget
+    echo xclip
+    echo xterm
+}
 
 #xorg-server-utils
 #multilib-devel

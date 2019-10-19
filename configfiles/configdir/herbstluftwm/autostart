@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # this is a simple config for herbstluftwm
-source ~/.xinitrc
-source ~/.config/herbstluftwm/colors
+#source ~/.xinitrc
+#source ~/.config/herbstluftwm/colors
 
 hc() { herbstclient "$@"; }
 
@@ -220,6 +220,6 @@ done
 
 
 app=nm-applet; [ $(pgrep $app >dev/null 2>&1) ] || $app &
-app=pamac-tray; [ $(pgrep $app >dev/null 2>&1) ] || $app &
+#app=pamac-tray; [ $(pgrep $app >dev/null 2>&1) ] || $app &
 
 #exec feh --bg-scale ~/pictures/Abinden.jpg
