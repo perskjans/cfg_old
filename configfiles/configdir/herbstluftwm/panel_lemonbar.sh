@@ -16,18 +16,19 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 
-if [[ "$(xrdb -query | grep "Xft.dpi" | cut -d' ' -f2)" == "96" ]]; then
+#if [[ "$(xrdb -query | grep "Xft.dpi" | cut -d' ' -f2)" == "96" ]]; then
+if [[ "${geometry[3]}" == "1080" ]]; then
     panel_height=20
-#    fontSize=14
-    fontAwesomeSize=12
+    fontSize=13
+    fontAwesomeSize=13
 else
     panel_height=40
-#    fontSize=10
+    fontSize=17
     fontAwesomeSize=14
 fi
 
 #font="Monospace-${fontSize}:antialias=true"
-#font="dejavu-${fontSize}:antialias=true"
+font="dejavu-${fontSize}:antialias=true"
 fontAwesomeFree="FontAwesome5Free-${fontAwesomeSize}:style=Solid:antialias=true;1"
 fontAwesomeBrand="FontAwesome5Brand-${fontAwesomeSize}:style=Solid:antialias=true;1"
 
@@ -201,6 +202,7 @@ fi
 
 
         RIGHT="$SEP $VOLUME $PWR $DATE_TIME $SEP"
+        #RIGHT="$DATE_TIME $SEP"
 
 
         echo -en "%{l}$TAGS%{c}$WIN_TITLE%{r}$RIGHT"
@@ -213,3 +215,4 @@ fi
 
 #}
 }  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -f ${fontAwesomeFree}  -f ${fontAwesomeBrand} -p -a 20 | sh
+#}  | lemonbar -g ${panel_width}x${panel_height}+$x+$y -F $co_panel_fg -B $co_panel_bg -f ${font} -p -a 20 | sh
