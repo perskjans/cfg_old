@@ -6,3 +6,4 @@ setxkbmap -model pc105 -layout us -variant altgr-intl
 
 #exec herbstluftwm
 #exec openbox
+exec $CURRENTWM
