@@ -15,6 +15,6 @@ if [ $? -eq 0 ]; then
     pc() { sudo xbps-remove -Oo $*; }
     pu() { sudo xbps-install -Su $*; }
     pq() { xbps-query $*; }
-    pqr() { sudo xbps-query -Rsl $*; }
+    pqr() { xbps-query -Rsl | grep -i $*; }
     prd() { sudo xbps-remove -Oo $*; }
 fi

@@ -71,6 +71,7 @@ packages_to_install()
     echo unzip
     echo vifm
     echo vim
+    echo volumeicon
     echo wget
     echo xclip
     echo xterm

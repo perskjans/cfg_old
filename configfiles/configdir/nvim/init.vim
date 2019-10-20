@@ -961,7 +961,7 @@ augroup END
 
 " }}}
 
-"autocmd BufWritePost */herbstluftwm/* :silent! herbstclient reload<CR>
+autocmd BufWritePost */herbstluftwm/* silent !herbstclient reload
 
 " END ---------------------------------------------------------------------- }}}
 
