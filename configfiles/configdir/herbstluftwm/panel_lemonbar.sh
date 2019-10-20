@@ -17,13 +17,13 @@ y=${geometry[1]}
 panel_width=${geometry[2]}
 
 if [[ "$(xrdb -query | grep "Xft.dpi" | cut -d' ' -f2)" == "96" ]]; then
-    panel_height=25
+    panel_height=20
 #    fontSize=14
-    fontAwesomeSize=8
+    fontAwesomeSize=12
 else
     panel_height=40
 #    fontSize=10
-    fontAwesomeSize=13
+    fontAwesomeSize=14
 fi
 
 #font="Monospace-${fontSize}:antialias=true"
