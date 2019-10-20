@@ -36,8 +36,6 @@ packages_to_install()
         echo libX11-devel
         echo libXft-devel
         echo liberation-fonts-ttf
-        echo lightdm
-        echo lightdm-gtk3-greeter
         echo lxappearance
         echo lxappearance-obconf
         echo menumaker
@@ -62,6 +60,8 @@ packages_to_install()
     echo gcc
     echo herbstluftwm
     echo libnotify
+    echo lightdm
+    echo lightdm-gtk-greeter
     echo make
     echo neovim
     echo patch

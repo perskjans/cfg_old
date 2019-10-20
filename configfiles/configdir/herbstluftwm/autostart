@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # this is a simple config for herbstluftwm
-#source ~/.xinitrc
 source ~/cfg/lib/autostart_apps
 source ~/.config/herbstluftwm/colors
 
