@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # this is a simple config for herbstluftwm
-source ~/cfg/lib/autostart_apps
-source ~/.config/herbstluftwm/colors
+[[ "$CURRENTWM" == "" ]] && source $HOME/.xprofile
+source $HOME/cfg/lib/autostart_apps
+source $HOME/.config/herbstluftwm/colors
 
 hc() { herbstclient "$@"; }
 
@@ -207,8 +208,8 @@ hc set tree_style '╾│ ├└╼─┐'
 hc detect_monitors
 
 ## find the panel
-#panel=~/.config/herbstluftwm/panel.sh
-panel=~/.config/herbstluftwm/panel_lemonbar.sh
+#panel=$HOME/.config/herbstluftwm/panel.sh
+panel=$HOME/.config/herbstluftwm/panel_lemonbar.sh
 pkill lemonbar
 pkill $panel
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do

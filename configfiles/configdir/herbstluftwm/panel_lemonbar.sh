@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.config/herbstluftwm/colors
+source $HOME/.config/herbstluftwm/colors
 
 HC=herbstclient
 
