@@ -58,3 +58,6 @@ alias gcl='~/bin/gitutils clone'
 alias gfa='~/bin/gitutils findall'
 alias gpa='~/bin/gitutils pullall'
 
+function gsetupstream() { git push --set-upstream origin $(git branch | grep '*' | cut -d' ' -f2); }
+function gdeleteupstream() { git push --delete origin $(git branch | grep '*' | cut -d' ' -f2); }
+
