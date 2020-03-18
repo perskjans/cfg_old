@@ -1,0 +1,23 @@
+###
+### This file is sourced by .profile
+###
+### Content is stuff specific for Redhat based Linux distros
+###
+
+which zypper >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    export DISTRO_TYPE=suse
+
+    ## Set up functions for package manager
+    manager=zypper
+
+    pm() { sudo $manager $* ;}
+    pi() { sudo $manager in $* ;}
+    pr() { sudo $manager rm --clean-deps $* ;}
+    pc() { sudo $manager clean all $* ;}
+    pu() { sudo $manager up $* ;}
+    pq() { sudo $manager pa | grep "i+" ;}
+    pdu() { sudo $manager dup ;}
+    pqr() { sudo $manager se $* ;}
+    prd() { sudo $manager rm --clean-deps $* ;}
+fi
