@@ -74,10 +74,10 @@ popd >/dev/null
 
 
 # VIM
-ln -snf $CONFIGDIR/nvim  ~/.vim
-ln -snf $CONFIGDIR/nvim/init.vim  ~/.vimrc
+ln -snf ~/.config/nvim  ~/.vim
+ln -snf ~/.config/nvim/init.vim  ~/.vimrc
 
 # For easier use of plugins in vim
-if [[ ! -d ~/.vim/plugins/Vundle.vim ]]; then
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/plugins/Vundle.vim
+if [[ ! -d ~/.config/nvim/plugins/Vundle.vim ]]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/plugins/Vundle.vim
 fi
