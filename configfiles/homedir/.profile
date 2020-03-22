@@ -1,5 +1,8 @@
 ### START: general
 
+    setxkbmap -model pc105 -layout us -variant altgr-intl
+    #setxkbmap -model pc105 -layout us,us -variant altgr-intl,workman-intl -option grp:alt_shift_toggle
+
     stty -ixon # Disable ctrl-s and ctrl-q
 
     [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)" # make less more friendly for non-text input files, see lesspipe(1)
