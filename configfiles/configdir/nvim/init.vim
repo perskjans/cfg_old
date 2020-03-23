@@ -66,6 +66,8 @@ call vundle#begin($myvimdir . '/plugins')
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'frazrepo/vim-rainbow'
+let g:rainbow_active = 1
 
 "Plugin 'andviro/flake8-vim'
 "let g:PyFlakeOnWrite = 1
