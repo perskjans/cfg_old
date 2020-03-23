@@ -39,4 +39,5 @@ fi
 
 for f in ~/cfg/lib/*_linux_specific; do . $f; done
 [ -f ~/cfg/lib/aliases ] &&. ~/cfg/lib/aliases
+[ -d ~/.workconfig ] && . ~/.workconfig/*
 [ -f ~/cfg/lib/setprompt ] && . ~/cfg/lib/setprompt
