@@ -1,8 +1,8 @@
 set fileencodings=utf-8
 set encoding=utf-8
 
-let $myvimdir="~/.config/nvim"
-let MYVIMRC=$myvimdir . "/init.vim"
+let $myvimdir="~/.vim"
+let MYVIMRC="~/.vimrc"
 let $workman=$myvimdir . "/workman.vim"
 
 syntax on
@@ -59,39 +59,85 @@ filetype off                  " required
 
 set rtp+=$myvimdir/plugins/Vundle.vim
 
-" CALL VUNdle#begin()
+" Call Vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 call vundle#begin($myvimdir . '/plugins')
 
-" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'yggdroot/indentline'
+
+Plugin 'easymotion/vim-easymotion'
+
+Plugin 'pangloss/vim-javascript'
+
+Plugin 'leafgarland/typescript-vim'
+
+Plugin 'elzr/vim-json'
+    "let g:vim_json_syntax_conceal = 0
+
 Plugin 'frazrepo/vim-rainbow'
-let g:rainbow_active = 1
+    let g:rainbow_active = 1
 
-"Plugin 'andviro/flake8-vim'
-"let g:PyFlakeOnWrite = 1
-"let g:PyFlakeCheckers = 'pep8'
-"let g:PyFlakeAggressive = 0
+Plugin 'airblade/vim-gitgutter'
 
-"Plugin 'flazz/vim-colorschemes'
+Plugin 'ctrlpvim/ctrlp.vim'
+    let g:ctrlp_map = '<leader>f'
 
-"Plugin 'justmao945/vim-clang'
+Plugin 'scrooloose/syntastic'
 
-Plugin 'kien/ctrlp.vim'
-let g:ctrlp_map = '<leader>f'
+Plugin 'scrooloose/nerdtree'
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    let NERDTreeHijackNetrw=1
+    let g:NERDTreeDirArrowExpandable = '+'
+    let g:NERDTreeDirArrowCollapsible = '-'
+
+Plugin 'xuyuanp/nerdtree-git-plugin'
+
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'tpope/vim-commentary'
+
+Plugin 'tpope/vim-surround'
+
+Plugin 'richsoni/vim-ecliptic'
+
+Plugin 'vim-airline/vim-airline'
+    let g:airline#extensions#tabline#enabled = 1
+    "let g:airline_powerline_fonts = 1
+
+"Plugin 'preservim/nerdcommenter'
+"    " Add spaces after comment delimiters by default
+"    let g:NERDSpaceDelims = 1
+"
+"    " Use compact syntax for prettified multi-line comments
+"    let g:NERDCompactSexyComs = 1
+"
+"    " Align line-wise comment delimiters flush left instead of following code indentation
+"    let g:NERDDefaultAlign = 'left'
+"
+"    " Set a language to use its alternate delimiters by default
+"    let g:NERDAltDelims_java = 1
+"
+"    " Add your own custom formats or override the defaults
+"    let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+"
+"    " Allow commenting and inverting empty lines (useful when commenting a region)
+"    let g:NERDCommentEmptyLines = 1
+"
+"    " Enable trimming of trailing whitespace when uncommenting
+"    let g:NERDTrimTrailingWhitespace = 1
+"
+"    " Enable NERDCommenterToggle to check all selected lines is commented or not 
+"    let g:NERDToggleCheckAllLines = 1
+
+"Plugin 'vim-airline/vim-airline-themes'
+
+"Plugin 'itchyny/lightline.vim'
 
 "Plugin 'msanders/snipmate.vim'
 
 "Plugin 'rhysd/vim-clang-format'
-
-Plugin 'scrooloose/nerdtree'
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeHijackNetrw=1
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
-
-Plugin 'tpope/vim-fugitive'
 
 "Plugin 'tpope/vim-vinegar'
 "let g:netrw_banner=0 " Disable annoying banner
@@ -101,12 +147,10 @@ Plugin 'tpope/vim-fugitive'
 "let g:netrw_list_hide=netrw_gitignore#Hide()
 "let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
 
-
-Plugin 'vim-airline/vim-airline'
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1
-
-Plugin 'richsoni/vim-ecliptic'
+"Plugin 'andviro/flake8-vim'
+"let g:PyFlakeOnWrite = 1
+"let g:PyFlakeCheckers = 'pep8'
+"let g:PyFlakeAggressive = 0
 
 "Plugin 'klen/python-mode'
 "map <Leader>g :call RopeGotoDefinition()<CR>
@@ -119,17 +163,9 @@ Plugin 'richsoni/vim-ecliptic'
 "let g:pymode_sytax_builtin_funcs = 1
 "map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
-"Plugin 'vim-airline/vim-airline-themes'
 
-"Plugin 'jeaye/color_coded'
+"Plugin 'ycm-core/YouCompleteMe'
 
-"Plugin 'Valloric/YouCompleteMe'
-
-"Plugin 'bbchung/clighter'
-"let g:clighter_autostart = 1
-"let g:clighter_libclang_file = '/usr/lib/llvm-3.6/lib/libclang.so'
-
-"Plugin 'matthiasvegh/ycmlighter'
 
 "All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -280,7 +316,7 @@ set timeout timeoutlen=300 ttimeoutlen=300
 "
 " I also remap zG to add to the local dict (vanilla zG is useless anyway).
 set dictionary=/usr/share/dict/words
-set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim-local-dictionary.utf-8.add
+"set spellfile=~/.vim/custom-dictionary.utf-8.add,~/.vim/local-dictionary.utf-8.add
 nnoremap zG 2zg
 
 "=====[ Correct common mistypings in-the-fly ]=======================
@@ -787,6 +823,23 @@ augroup ft_javascript
 augroup END
 
 " }}}
+
+" json {{{
+
+au! BufRead,BufNewFile *.json set filetype=json
+
+augroup json_autocmd
+  autocmd!
+  autocmd FileType json set autoindent
+  autocmd FileType json set formatoptions=tcq2l
+  autocmd FileType json set textwidth=78 shiftwidth=2
+  autocmd FileType json set softtabstop=2 tabstop=8
+  autocmd FileType json set expandtab
+  autocmd FileType json set foldmethod=syntax
+augroup END
+
+" }}}
+
 " Makefile {{{
 
 augroup ft_make
