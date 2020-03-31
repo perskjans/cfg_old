@@ -83,6 +83,7 @@ Plugin 'airblade/vim-gitgutter'
 
 Plugin 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_cmd = 'CtrlPMixed'
 
 Plugin 'scrooloose/syntastic'
 
