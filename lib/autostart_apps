@@ -2,7 +2,7 @@
 for app in nm-applet volumeicon pamac-tray
 do
     if [ ! $(which $app >/dev/null 2>&1) ]; then
-        [ $(pgrep $app >dev/null 2>&1) ] || $app &
+        killall $app && $app &
     fi
 done
 #exec feh --bg-scale ~/pictures/Abinden.jpg

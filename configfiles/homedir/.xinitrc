@@ -7,6 +7,8 @@
 #
 # In case everything goes wrong, we at least fall back to a plain xterm
 #
+WINDOWMANAGER=herbstluftwm
+
 failsafe="xterm -ls -T Failsafe -geometry 80x24-0-0"
 trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
@@ -48,6 +50,7 @@ esac
 #
 
 [ -f ~/.xprofile ] && . ~/.xprofile
+
 
 #exec herbstluftwm
 #exec openbox

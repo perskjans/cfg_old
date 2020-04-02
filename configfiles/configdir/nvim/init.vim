@@ -1,9 +1,12 @@
 set fileencodings=utf-8
 set encoding=utf-8
 
-let $myvimdir="~/.vim"
-let MYVIMRC="~/.vimrc"
+let $rootdir="~"
+let $myvimdir=$rootdir . "/.config/nvim"
+let MYVIMRC=$rootdir . "/.config/nvim/init.vim"
 let $workman=$myvimdir . "/workman.vim"
+
+set runtimepath+=$myvimdir,$myvimdir"/after"
 
 syntax on
 let $mycolorfile=$myvimdir . "/colors/perskjans.vim"
@@ -24,12 +27,13 @@ set backup
 set noswapfile
 
 set dir=~/.cache/vimtmp
-set undodir=~/.cache/tmp/undo
+set undodir=~/.cache/vimtmp/undo
 set backupdir=~/.cache/vimtmp/backup
 set viewdir=~/.cache/vimtmp/view
 
-" Make Vim able to edit crontab files again.
 set backupskip=/tmp/*,/private/tmp/*"
+
+set viminfo+=n~/.local/share/nvim/viminfo
 
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&dir))
@@ -48,66 +52,58 @@ endif
 " }}}
 
 " PLUGIN HANDLING -------------------------------------------------------- {{{
-"## neomake, vim-plug, matchit, vim-suround, supertab, ZoomWin, tComment,
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" Get Vundle
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/plugins/Vundle.vim
 
 " set the runtime path to include Vundle and initialize
 
-set rtp+=$myvimdir/plugins/Vundle.vim
+" Call plug#begin()
+" alternatively, pass a path where plug should install plugins
+call plug#begin($myvimdir . '/plugins')
 
-" Call Vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-call vundle#begin($myvimdir . '/plugins')
+Plug 'yggdroot/indentline'
 
-Plugin 'VundleVim/Vundle.vim'
+Plug 'easymotion/vim-easymotion'
 
-Plugin 'yggdroot/indentline'
+Plug 'pangloss/vim-javascript'
 
-Plugin 'easymotion/vim-easymotion'
+Plug 'leafgarland/typescript-vim'
 
-Plugin 'pangloss/vim-javascript'
-
-Plugin 'leafgarland/typescript-vim'
-
-Plugin 'elzr/vim-json'
+Plug 'elzr/vim-json'
     "let g:vim_json_syntax_conceal = 0
 
-Plugin 'frazrepo/vim-rainbow'
+Plug 'frazrepo/vim-rainbow'
     let g:rainbow_active = 1
 
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_map = '<leader>f'
     let g:ctrlp_cmd = 'CtrlPMixed'
 
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
     let NERDTreeHijackNetrw=1
     let g:NERDTreeDirArrowExpandable = '+'
     let g:NERDTreeDirArrowCollapsible = '-'
 
-Plugin 'xuyuanp/nerdtree-git-plugin'
+Plug 'xuyuanp/nerdtree-git-plugin'
 
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
-Plugin 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
-Plugin 'richsoni/vim-ecliptic'
+Plug 'richsoni/vim-ecliptic'
 
-Plugin 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
     let g:airline#extensions#tabline#enabled = 1
     "let g:airline_powerline_fonts = 1
 
-"Plugin 'preservim/nerdcommenter'
+"Plug 'preservim/nerdcommenter'
 "    " Add spaces after comment delimiters by default
 "    let g:NERDSpaceDelims = 1
 "
@@ -129,18 +125,18 @@ Plugin 'vim-airline/vim-airline'
 "    " Enable trimming of trailing whitespace when uncommenting
 "    let g:NERDTrimTrailingWhitespace = 1
 "
-"    " Enable NERDCommenterToggle to check all selected lines is commented or not 
+"    " Enable NERDCommenterToggle to check all selected lines is commented or not
 "    let g:NERDToggleCheckAllLines = 1
 
-"Plugin 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline-themes'
 
-"Plugin 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 
-"Plugin 'msanders/snipmate.vim'
+"Plug 'msanders/snipmate.vim'
 
-"Plugin 'rhysd/vim-clang-format'
+"Plug 'rhysd/vim-clang-format'
 
-"Plugin 'tpope/vim-vinegar'
+"Plug 'tpope/vim-vinegar'
     let g:netrw_banner=0 " Disable annoying banner
     let g:netrw_browser_split=4 " Open in prior window
     let g:netrw_altv=1 " Open splits to the right
@@ -148,40 +144,29 @@ Plugin 'vim-airline/vim-airline'
 "let g:netrw_list_hide=netrw_gitignore#Hide()
 "let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
 
-"Plugin 'andviro/flake8-vim'
-"let g:PyFlakeOnWrite = 1
-"let g:PyFlakeCheckers = 'pep8'
-"let g:PyFlakeAggressive = 0
+"Plug 'andviro/flake8-vim'
+    "let g:PyFlakeOnWrite = 1
+    "let g:PyFlakeCheckers = 'pep8'
+    "let g:PyFlakeAggressive = 0
 
-"Plugin 'klen/python-mode'
-"map <Leader>g :call RopeGotoDefinition()<CR>
-"let ropevim_enable_shortcuts = 1
-"let g:pymode_rope_goto_def_newwin = "vnew"
-"let g:pymode_rope_extended_complete = 1
-"let g:pymode_breakpoint = 1
-"let g:pymode_sytax = 1
-"let g:pymode_sytax_builtin_objs = 1
-"let g:pymode_sytax_builtin_funcs = 1
-"map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+"Plug 'klen/python-mode'
+    "map <Leader>g :call RopeGotoDefinition()<CR>
+    "let ropevim_enable_shortcuts = 1
+    "let g:pymode_rope_goto_def_newwin = "vnew"
+    "let g:pymode_rope_extended_complete = 1
+    "let g:pymode_breakpoint = 1
+    "let g:pymode_sytax = 1
+    "let g:pymode_sytax_builtin_objs = 1
+    "let g:pymode_sytax_builtin_funcs = 1
+    "map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
 
-"Plugin 'ycm-core/YouCompleteMe'
+"Plug 'ycm-core/YouCompleteMe'
 
 
 "All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 
-"filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
 
 " Put your non-Plugin stuff after this line
 
@@ -210,11 +195,8 @@ set laststatus=2
 set history=1000
 set undofile
 set undoreload=10000
-set list
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set lazyredraw
 set matchtime=3
-set showbreak=↪
 set splitbelow
 set splitright
 set ff=unix
@@ -375,7 +357,7 @@ set softtabstop=4
 set expandtab
 set wrap
 "set textwidth=80
-set formatoptions=tcq
+set formatoptions+=tcq
 set colorcolumn=81
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
@@ -395,10 +377,15 @@ augroup END
 "====[ Toggle visibility of naughty characters ]============
 
 " Make naughty characters visible...
-"exec "set listchars=tab:\<Char-0xBB>\<Char-0xBB>,trail:^,extends:>,precedes:<,nbsp:~"
-set listchars=tab:>~,trail:^,extends:>,precedes:<,nbsp:~
+set list
+set showbreak=↪
+set listchars=tab:▸-▸,extends:❯,precedes:❮,trail:«,nbsp:»
+",eol:¬,
+	
+"set showbreak=.^.
+"set listchars=tab:>~,extends:>,precedes:<,trail:^,nbsp:~
 ",eol:
-set showbreak=.^.
+
 
 " Trailing {{{
 " Only shown when not in insert mode so I don't go insane.
@@ -415,6 +402,7 @@ augroup END
 augroup VisibleNaughtiness
     autocmd!
     autocmd BufEnter  *       set list
+    autocmd BufEnter  *.log   set nolist
     autocmd BufEnter  *.txt   set nolist
     autocmd BufEnter  *.vp*   set nolist
     autocmd BufEnter  *       if !&modifiable
@@ -467,7 +455,6 @@ nnoremap <silent> <leader>5 :wincmd =<cr>
     "nnoremap : ,
     "nnoremap , ;
     "nnoremap ' "
-nnoremap <silent> <leader>0 :wincmd =<cr>
 
 " END ---------------------------------------------------------------------- }}}}}}
 
@@ -521,7 +508,7 @@ nnoremap <silent> <leader>0 :wincmd =<cr>
 
 
     " search and replace
-    nnoremap <leader>r :%s:::cg<Left><Left><Left><Left>
+    nnoremap <leader>r :%s```cg<Left><Left><Left><Left>
 
     " Toggle search highlight
     nnoremap <leader>h :set hlsearch! hlsearch?<CR>
@@ -761,28 +748,6 @@ augroup ft_css
 augroup END
 
 " }}}
-" Django {{{
-
-augroup ft_django
-    au!
-
-    au BufNewFile,BufRead urls.py           setlocal nowrap
-    au BufNewFile,BufRead urls.py           normal! zR
-    au BufNewFile,BufRead dashboard.py      normal! zR
-    au BufNewFile,BufRead local_settings.py normal! zR
-
-    au BufNewFile,BufRead admin.py     setlocal filetype=python.django
-    au BufNewFile,BufRead urls.py      setlocal filetype=python.django
-    au BufNewFile,BufRead models.py    setlocal filetype=python.django
-    au BufNewFile,BufRead views.py     setlocal filetype=python.django
-    au BufNewFile,BufRead settings.py  setlocal filetype=python.django
-    au BufNewFile,BufRead settings.py  setlocal foldmethod=marker
-    au BufNewFile,BufRead forms.py     setlocal filetype=python.django
-    au BufNewFile,BufRead common_settings.py  setlocal filetype=python.django
-    au BufNewFile,BufRead common_settings.py  setlocal foldmethod=marker
-augroup END
-
-" }}z
 " Fish {{{
 
 augroup ft_fish

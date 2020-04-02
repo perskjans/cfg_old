@@ -19,7 +19,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-alias profile_reload=". ~/.profile"
+alias profilereload=". ~/.profile"
 alias tx='~/bin/runtmux'
 
 alias psa='ps aux | grep'

@@ -1,33 +1,48 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # this is a simple config for herbstluftwm
-
+[[ "$CURRENTWM" == "" ]] && source $HOME/.xprofile
 source $HOME/cfg/lib/autostart_apps
+source $HOME/.config/herbstluftwm/colors
 
-hc() {
-    herbstclient "$@"
-}
+hc() { herbstclient "$@"; }
 
 hc emit_hook reload
 
-xsetroot -solid '#5A8E3A'
+
+#### keybindings ####
 
 # remove all existing keybindings
 hc keyunbind --all
 
-# keybindings
 # if you have a super key you will be much happier with Mod set to Mod4
 #Mod=Mod1    # Use alt as the main modifier
 Mod=Mod4   # Use the super key as the main modifier
 
+hc keybind $Mod-Shift-q quit
+hc keybind $Mod-Shift-r reload
+hc keybind $Mod-q close
+
+BROWSER=chromium
+
+MYTERM=st
+
+if [ ! $(which $MYTERM) ]; then
+    MYTERM=xterm
+fi
+
+hc keybind $Mod-Return spawn ${MYTERM}
 hc keybind $Mod-t spawn $HOME/bin/toggletray
 hc keybind $Mod-b spawn $BROWSER
 hc keybind $Mod-d spawn dmenu_run
 
-hc keybind $Mod-Shift-q quit
-hc keybind $Mod-Shift-r reload
-hc keybind $Mod-Shift-c close
-hc keybind $Mod-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
+#hc keybind XF86AudioLowerVolume spawn amixer -q -- sset Master playback 5%-
+#hc keybind XF86AudioRaiseVolume spawn amixer -q -- sset Master playback 5%+
+hc keybind XF86AudioLowerVolume spawn amixer -q -c 0 set Master playback 1dB-
+hc keybind XF86AudioRaiseVolume spawn amixer -q -c 0 set Master playback 1dB+
+hc keybind XF86AudioMute spawn amixer -q set Master toggle
+hc keybind XF86MonBrightnessDown spawn xbacklight -dec 5
+hc keybind XF86MonBrightnessUp spawn xbacklight -inc 5
 
 # basic movement
 # focusing clients
@@ -65,6 +80,7 @@ hc keybind $Mod-Control-h       resize left  +$resizestep
 hc keybind $Mod-Control-j       resize down  +$resizestep
 hc keybind $Mod-Control-k       resize up    +$resizestep
 hc keybind $Mod-Control-l       resize right +$resizestep
+
 hc keybind $Mod-Control-Left    resize left  -$resizestep
 hc keybind $Mod-Control-Down    resize down  -$resizestep
 hc keybind $Mod-Control-Up      resize up    -$resizestep
@@ -84,6 +100,9 @@ for i in ${!tag_names[@]} ; do
     fi
 done
 
+# add tag for popups
+#hc add popup
+
 # cycle through tags
 hc keybind $Mod-period use_index +1 --skip-visible
 hc keybind $Mod-comma  use_index -1 --skip-visible
@@ -101,6 +120,7 @@ hc keybind $Mod-space                                                           
                      . cycle_layout +1 vertical horizontal max vertical grid    \
                , cycle_layout +1
 
+
 # mouse
 hc mouseunbind --all
 hc mousebind $Mod-Button1 move
@@ -113,6 +133,55 @@ hc keybind $Mod-Tab         cycle_all +1
 hc keybind $Mod-Shift-Tab   cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-i jumpto urgent
+
+
+#### Visual ####
+
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
+
+## Background color
+xsetroot -solid $co_root
+
+#hc set frame_border_active_color '#222222'
+#
+#hc set frame_border_normal_color '#101010'
+#hc set frame_bg_normal_color '#565656'
+#
+### Blank window frame
+#hc set frame_bg_active_color '#450045'
+#hc set frame_border_width 1
+#hc set always_show_frame 1
+#hc set frame_bg_transparent 1
+#hc set frame_transparent_width 2
+#hc set frame_gap 0
+#
+### workspace colors
+#hc attr theme.inner_color red
+#
+##hc attr theme.active.color '#af5f00'
+#hc attr theme.active.color $co_frame_bg_active_color
+#hc attr theme.active.inner_color '#ff00ff' #'#3E4A00'
+#hc attr theme.active.outer_color '#3E4A00' #'#3E4A00'
+#
+#hc attr theme.normal.color $co_frame_bg_normal_color # '#454545'
+#hc attr theme.urgent.color orange
+#hc attr theme.floating.outer_color white
+#
+#hc attr theme.background_color '#141414'
+#
+#hc attr theme.inner_width 1
+#hc attr theme.border_width 2
+#hc attr theme.floating.border_width 4
+#hc attr theme.floating.outer_width 1
+#
+#hc set window_gap 0
+#hc set frame_padding 4
+#hc set smart_window_surroundings 0
+#hc set smart_frame_surroundings 0
+#hc set mouse_recenter_gap 0
+#hc set focus_follows_mouse 0
+
 
 # theme
 hc attr theme.tiling.reset 1
@@ -140,34 +209,37 @@ hc attr theme.active.inner_color '#3E4A00'
 hc attr theme.active.outer_color '#3E4A00'
 hc attr theme.background_color '#141414'
 
-hc set window_gap 0
-hc set frame_padding 0
-hc set smart_window_surroundings 0
-hc set smart_frame_surroundings 1
-hc set mouse_recenter_gap 0
+#### Rules ####
 
-# rules
 hc unrule -F
-#hc rule class=XTerm tag=3 # move all xterms to tag 3
 hc rule focus=on # normally focus new clients
+#hc rule class=XTerm tag=3 # move all xterms to tag 3
 #hc rule focus=off # normally do not focus new clients
 # give focus to most common terminals
 #hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+#hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' tag=popup
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
-hc set tree_style '╾│ ├└╼─┐'
+hc rule class=Chromium tag=2 focus=on
+hc rule class=thunar tag=3 focus=on
+hc rule class=mpv tag=9 focus=on
+hc rule class=transmission-gtk tag=10 focus=on
+
 
 # unlock, just to be sure
 hc unlock
 
+hc set tree_style '╾│ ├└╼─┐'
+
 # do multi monitor setup here, e.g.:
 # hc set_monitors 1280x1024+0+0 1280x1024+1280+0
 # or simply:
-# hc detect_monitors
+hc detect_monitors
 
-# find the panel
+## find the panel
+#panel=$HOME/.config/herbstluftwm/panel.sh
 panel=$HOME/.config/herbstluftwm/panel_lemonbar.sh
 pkill lemonbar
 pkill $panel
