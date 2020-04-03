@@ -3,7 +3,7 @@ set encoding=utf-8
 
 let $rootdir="~"
 let $myvimdir=$rootdir . "/.config/nvim"
-let MYVIMRC=$rootdir . "/.config/nvim/init.vim"
+let $MYVIMRC=$rootdir . "/.config/nvim/init.vim"
 let $workman=$myvimdir . "/workman.vim"
 
 set runtimepath+=$myvimdir,$myvimdir"/after"
