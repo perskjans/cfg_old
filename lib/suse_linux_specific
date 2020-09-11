@@ -23,5 +23,5 @@ if [ $? -eq 0 ]; then
     pq() { sudo $manager se '*' | grep "i+" ;}
     pdu() { sudo $manager dup ;}
     pqr() { sudo $manager se $* ;}
-    prd() { sudo $manager rm --clean-deps $* ;}
+    pru() { sudo $manager rm --clean-deps $(sudo $manager | grep "^i" | cut -d'|' -f3) ;}
 fi
