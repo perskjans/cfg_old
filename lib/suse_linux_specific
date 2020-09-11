@@ -1,8 +1,12 @@
 ###
 ### This file is sourced by .profile
 ###
-### Content is stuff specific for Redhat based Linux distros
+### Content is stuff specific for Suse based Linux distros
 ###
+
+#How to get around the cpu load with btrfs maintaince: 
+#sudo btrfs quota disable /
+#this will remove the maintainence lag for good ;). The problem is that the quota system is causing lag, but if you turn that off it'll run just fine.
 
 which zypper >/dev/null 2>&1
 if [ $? -eq 0 ]; then
