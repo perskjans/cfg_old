@@ -20,7 +20,7 @@ if [ $? -eq 0 ]; then
     pr() { sudo $manager rm --clean-deps $* ;}
     pc() { sudo $manager clean all $* ;}
     pu() { sudo $manager up $* ;}
-    pq() { sudo $manager pa | grep "i+" ;}
+    pq() { sudo $manager se '*' | grep "i+" ;}
     pdu() { sudo $manager dup ;}
     pqr() { sudo $manager se $* ;}
     prd() { sudo $manager rm --clean-deps $* ;}
